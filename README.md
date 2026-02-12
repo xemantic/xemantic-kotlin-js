@@ -1,6 +1,6 @@
 # xemantic-kotlin-js
 
-Kotlin multiplatform library providing JavaScript utilities
+Kotlin Multiplatform library providing type-safe DSL for constructing HTML5 and SVG DOM trees, along with reactive web utilities, targeting JavaScript and WebAssembly runtimes.
 
 [<img alt="Maven Central Version" src="https://img.shields.io/maven-central/v/com.xemantic.kotlin/xemantic-kotlin-js">](https://central.sonatype.com/artifact/com.xemantic.kotlin/xemantic-kotlin-js)
 [<img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/xemantic/xemantic-kotlin-js">](https://github.com/xemantic/xemantic-kotlin-js/releases)
