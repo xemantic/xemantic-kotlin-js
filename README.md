@@ -33,15 +33,124 @@ dependencies {
 }
 ```
 
-## Development
+## MVVM Example
 
-From time to time, it is worth to:
+The test suite includes a full [MVVM (Model-View-ViewModel)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) example demonstrating how to structure a Kotlin multiplatform application with a clear separation between platform-independent logic and browser-specific view code.
 
-### Update gradlew wrapper
+### Why split `commonTest` and `jsTest`?
 
-```shell
-./gradlew wrapper --gradle-version 9.3.0 --distribution-type bin
+The ViewModel and service interfaces live in `commonTest`, while the View lives in `jsTest`. This split is intentional:
+
+- **`commonTest`** - The [`LoginViewModel`](src/commonTest/kotlin/test/mvvm/LoginViewModel.kt), service interfaces ([`Authenticator`](src/commonTest/kotlin/test/mvvm/Services.kt), [`Navigator`](src/commonTest/kotlin/test/mvvm/Services.kt)), and all [ViewModel tests](src/commonTest/kotlin/test/mvvm/MvvmTest.kt) are pure Kotlin with no DOM dependency. They can run on any platform (JVM, Native, JS, WASM), enabling fast feedback loops during development (e.g., running tests on JVM without a browser).
+- **`jsTest`** - The [`LoginView`](src/jsTest/kotlin/test/mvvm/LoginView.kt) uses the DOM DSL to build the actual HTML tree and bind it to the ViewModel. It can only run in a browser environment.
+
+This separation means the bulk of your business logic and its tests remain portable and fast to execute, while only the thin view layer requires a browser.
+
+### [Service interfaces](src/commonTest/kotlin/test/mvvm/Services.kt) (`commonTest`)
+
+```kotlin
+interface Authenticator {
+    suspend fun authenticate(username: String, password: String): Boolean
+}
+
+interface Navigator {
+    fun goTo(location: String)
+}
 ```
+
+### [ViewModel](src/commonTest/kotlin/test/mvvm/LoginViewModel.kt) (`commonTest`)
+
+The [`LoginViewModel`](src/commonTest/kotlin/test/mvvm/LoginViewModel.kt) exposes reactive state via `StateFlow` and delegates side effects to injected services. The `CoroutineDispatcher` is injected to decouple the ViewModel from any specific threading model:
+
+| Platform | Dispatcher | Why |
+|---|---|---|
+| **Kotlin/JS & WASM** | `Dispatchers.Default` or `Dispatchers.Main` | JavaScript is single-threaded — both map to the same event-loop dispatcher. |
+| **Android** | `Dispatchers.Main` (or `.immediate`) | `StateFlow` updates must be emitted on the UI thread to safely drive view updates. |
+| **iOS (Kotlin/Native)** | `Dispatchers.Main` | Maps to the main dispatch queue, same reasoning as Android. |
+| **Tests** | `UnconfinedTestDispatcher` | Executes coroutines eagerly and deterministically, without a real event loop. |
+
+```kotlin
+class LoginViewModel(
+    dispatcher: CoroutineDispatcher,
+    private val authenticator: Authenticator,
+    private val navigator: Navigator
+) {
+    val submitEnabled: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+
+    val error: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
+
+    val loading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+
+    fun onUsernameChanged(username: String) { /* ... */ }
+    fun onPasswordChanged(password: String) { /* ... */ }
+    fun onSubmit() { /* launches coroutine to authenticate */ }
+    fun onCleared() { scope.cancel() }
+}
+```
+
+### [ViewModel tests](src/commonTest/kotlin/test/mvvm/MvvmTest.kt) (`commonTest`)
+
+Tests use [Mokkery](https://mokkery.dev/) for mocking and `kotlinx-coroutines-test` for deterministic coroutine execution. No browser needed:
+
+```kotlin
+@Test
+fun `should log in on successful authentication`() = runTest {
+    val dispatcher = UnconfinedTestDispatcher(testScheduler)
+    val authenticator = mock<Authenticator> {
+        everySuspend { authenticate("foo", "bar") } returns true
+    }
+    val navigator = mock<Navigator>(MockMode.autoUnit)
+    viewModel = LoginViewModel(dispatcher, authenticator, navigator)
+
+    viewModel.onUsernameChanged("foo")
+    viewModel.onPasswordChanged("bar")
+    viewModel.onSubmit()
+
+    assert(!viewModel.submitEnabled.value)
+    assert(!viewModel.loading.value)
+    verifySuspend(VerifyMode.exhaustiveOrder) {
+        authenticator.authenticate("foo", "bar")
+        navigator.goTo("Home")
+    }
+}
+```
+
+### [View](src/jsTest/kotlin/test/mvvm/LoginView.kt) (`jsTest`)
+
+The `LoginView` uses the DOM DSL to build HTML and binds ViewModel state flows directly to DOM properties:
+
+```kotlin
+fun loginView(viewModel: LoginViewModel) = node { form("app-login") {
+    it.onsubmit = { event -> event.preventDefault() }
+    div("field label border round prefix") {
+        icon("mail")
+        input("large border", name = "username", type = "text") { input ->
+            input.oninput = {
+                viewModel.onUsernameChanged(input.value)
+            }
+        }
+        label { +"Username" }
+    }
+    // ...
+    nav("no-space") {
+        button("large", type = "submit") { button ->
+            button.ariaLabel = "Submit"
+            viewModel.submitEnabled.onEach { enabled ->
+                button.disabled = !enabled
+            }.launchIn(viewModel.scope)
+            button.onclick = { viewModel.onSubmit() }
+            +"Submit"
+        }
+    }
+}}
+```
+
+The view function returns a DOM node that can be appended to the document. ViewModel `StateFlow`s are collected with `onEach { ... }.launchIn(viewModel.scope)` to reactively update DOM properties like `disabled` and `hidden`.
+
+## Development
 
 ### Update all the dependencies to the latest versions
 

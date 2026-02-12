@@ -14,4 +14,28 @@
  * limitations under the License.
  */
 
-rootProject.name = "xemantic-kotlin-js"
+package com.xemantic.kotlin.js.dom
+
+import org.w3c.dom.Storage
+
+/**
+ * Sets multiple items in the [Storage] at once.
+ *
+ * Example:
+ * ```kotlin
+ * localStorage.setItems(
+ *     "theme" to "dark",
+ *     "lang" to "en"
+ * )
+ * ```
+ *
+ * @param items the key-value pairs to store.
+ * @see Storage.setItem
+ */
+public fun Storage.setItems(
+    vararg items: Pair<String, String>
+) {
+    items.forEach { (key, value) ->
+        setItem(key, value)
+    }
+}

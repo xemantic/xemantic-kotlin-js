@@ -1,13 +1,14 @@
 [versions]
-kotlinTarget = "2.2"
-javaTarget = "17"
+kotlinTarget = "2.3"
 
-kotlin = "2.2.21"
+kotlin = "2.3.10"
+kotlinxCoroutines = "1.10.2"
 asm = "9.9.1"
 
-xemanticKotlinTest = "1.17.2"
+xemanticKotlinTest = "1.17.3"
+markanywhere = "0.1.12"
 
-# TODO put your dependencies here
+mokkery = "3.1.1"
 
 versionsPlugin = "0.53.0"
 dokkaPlugin = "2.1.0"
@@ -18,7 +19,11 @@ xemanticConventionsPlugin = "0.6.8"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 xemantic-kotlin-test = { module = "com.xemantic.kotlin:xemantic-kotlin-test", version.ref = "xemanticKotlinTest" }
+markanywhere-js = { module = "com.xemantic.markanywhere:markanywhere-js", version.ref = "markanywhere" }
+markanywhere-render = { module = "com.xemantic.markanywhere:markanywhere-render", version.ref = "markanywhere" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -29,3 +34,4 @@ maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPubli
 kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibilityValidatorPlugin" }
 jreleaser = { id = "org.jreleaser", version.ref = "jreleaserPlugin" }
 xemantic-conventions = { id = "com.xemantic.gradle.xemantic-conventions", version.ref = "xemanticConventionsPlugin" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery"}

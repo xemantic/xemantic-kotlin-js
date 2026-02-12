@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = "xemantic-kotlin-js"
+package com.xemantic.kotlin.js.dom
+
+import org.w3c.dom.Element
+
+@Suppress("NOTHING_TO_INLINE")
+public inline operator fun Element.get(
+    name: String,
+): String? = getAttribute(name)
+
+@Suppress("NOTHING_TO_INLINE")
+public inline operator fun Element.set(
+    key: String,
+    value: String?
+) {
+    if (value != null) setAttribute(key, value)
+    else removeAttribute(key)
+}

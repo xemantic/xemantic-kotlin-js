@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Kazimierz Pogoda / Xemantic
+ * Copyright 2026 Kazimierz Pogoda / Xemantic
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,5 @@
  * limitations under the License.
  */
 
-// TODO replace with your package
-package com.xemantic.template.kotlin.multiplatform
+package com.xemantic.kotlin.js
 
-import com.xemantic.kotlin.test.have
-import com.xemantic.kotlin.test.should
-import kotlin.test.Test
-
-// TODO replace with your code
-class HelloWorldTest {
-
-    @Test
-    fun `should have singleton object Foo with const BAR equal to buzz`() {
-        Foo should {
-            have(BAR == "buzz")
-        }
-    }
-
-}

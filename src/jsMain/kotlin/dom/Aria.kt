@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-rootProject.name = "xemantic-kotlin-js"
+package com.xemantic.kotlin.js.dom
+
+import org.w3c.dom.Element
+
+public inline var Element.ariaLabel: String?
+    get() = this["aria-label"]
+    set(value) { this["aria-label"] = value }
+
+public inline var Element.role: String?
+    get() = this["role"]
+    set(value) { this["role"] = value }
