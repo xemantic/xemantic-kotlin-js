@@ -14,5 +14,25 @@
  * limitations under the License.
  */
 
-package com.xemantic.kotlin.js
+package com.xemantic.kotlin.js.collections
 
+import kotlin.js.collections.JsSet
+
+public fun <T> jsSetOf(
+    vararg values: T
+): JsSet<T> = JsSet<T>().also { set: dynamic ->
+    values.forEach { set.add(it) }
+}
+
+public inline val JsSet<*>.size: Int get() = asDynamic().size
+
+@Suppress("NOTHING_TO_INLINE")
+public inline operator fun <T> JsSet<T>.contains(
+    element: T
+): Boolean = this.asDynamic().has(element)
+
+@Suppress("NOTHING_TO_INLINE")
+public inline fun JsSet<*>.isEmpty(): Boolean = size == 0
+
+@Suppress("NOTHING_TO_INLINE")
+public inline fun JsSet<*>.isNotEmpty(): Boolean = !isEmpty()
