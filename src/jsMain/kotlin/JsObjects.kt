@@ -24,7 +24,7 @@ public inline fun JsObject(): JsObject = js("{}")
 @Suppress("NOTHING_TO_INLINE")
 public inline operator fun <T> JsObject.get(
     key: String
-): T = asDynamic()[key]
+): T? = asDynamic()[key]
 
 @Suppress("NOTHING_TO_INLINE")
 public inline operator fun JsObject.set(key: String, value: dynamic) {

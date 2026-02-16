@@ -39,7 +39,7 @@ class JsObjectsTest {
         obj["foo"] = 42
 
         // then
-        val value: Int = obj["foo"]
+        val value: Int = obj["foo"]!!
         assert(value == 42)
     }
 
@@ -53,7 +53,7 @@ class JsObjectsTest {
         obj["key"] = "new"
 
         // then
-        assert(obj["key"] as String == "new")
+        assert(obj["key"] as? String == "new")
     }
 
     @Test
@@ -67,10 +67,10 @@ class JsObjectsTest {
         obj["c"] = true
 
         // then
-        val a: String = obj["a"]
+        val a: String = obj["a"]!!
         assert(a == "alpha")
-        assert(obj["b"] as Int == 2)
-        assert(obj["c"])
+        assert(obj["b"] as? Int == 2)
+        assert(obj["c"] as? Boolean == true)
     }
 
     @Test

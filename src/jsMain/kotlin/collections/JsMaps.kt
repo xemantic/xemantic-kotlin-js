@@ -21,7 +21,7 @@ import kotlin.js.collections.JsMap
 @Suppress("NOTHING_TO_INLINE")
 public inline operator fun <K, V> JsMap<K, V>.get(
     key: K
-): V = asDynamic().get(key)
+): V? = asDynamic().get(key)
 
 @Suppress("NOTHING_TO_INLINE")
 public inline operator fun <K, V> JsMap<K, V>.set(key: K, value: V) {
