@@ -23,44 +23,44 @@ import org.w3c.dom.*
 @DslMarker
 public annotation class DomDsl
 
-public val node: NodeBuilder get() = NodeBuilder(
-    root = document.createDocumentFragment()
+public val node: NodeBuilder<DocumentFragment> get() = NodeBuilder(
+    node = document.createDocumentFragment()
 )
 
 public inline operator fun <T : Node> T.invoke(
-    crossinline block: NodeBuilder.() -> Unit
+    crossinline block: NodeBuilder<T>.() -> Unit
 ): T {
     NodeBuilder(this).block()
     return this
 }
 
 @DomDsl
-public class NodeBuilder(
-    public val root: Node
+public class NodeBuilder<T : Node>(
+    public val node: T
 ) {
 
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun String.invoke(
         klass: String? = null,
         id: String? = null,
-        crossinline block: NodeBuilder.(Element) -> Unit = {}
+        crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
     ): Element = element(name = this, klass, id, block)
 
-    public inline fun <T : Element> element(
+    public inline fun <E : Element> element(
         name: String,
         klass: String? = null,
         id: String? = null,
-        crossinline block: NodeBuilder.(T) -> Unit = {}
-    ): T {
-        val element = root.ownerDocument!!.createElement(name).unsafeCast<T>()
+        crossinline block: NodeBuilder<E>.() -> Unit = {}
+    ): E {
+        val element = node.ownerDocument!!.createElement(name).unsafeCast<E>()
         if (klass != null) {
             element.className = klass
         }
         if (id != null) {
             element.id = id
         }
-        NodeBuilder(root = element).block(element)
-        root.appendChild(element)
+        NodeBuilder(element).block()
+        node.appendChild(element)
         return element
     }
 
@@ -69,10 +69,10 @@ public class NodeBuilder(
         name: String,
         klass: String? = null,
         id: String? = null,
-        crossinline block: NodeBuilder.(T) -> Unit = {}
+        crossinline block: NodeBuilder<T>.() -> Unit = {}
     ): T {
 
-        val element = root.ownerDocument!!.createElementNS(
+        val element = node.ownerDocument!!.createElementNS(
             namespace, name
         ).unsafeCast<T>()
 
@@ -83,32 +83,38 @@ public class NodeBuilder(
             element.id = id
         }
 
-        NodeBuilder(root = element).block(element)
-        root.appendChild(element)
+        NodeBuilder(element).block()
+        node.appendChild(element)
         return element
     }
 
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun Node.unaryPlus() {
-        root.appendChild(this)
+        node.appendChild(this)
     }
 
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun String.unaryPlus() {
-        val lastChild = root.lastChild
+        val lastChild = node.lastChild
         if (lastChild != null && lastChild is Text) {
             lastChild.appendData(this)
         } else {
-            root.appendChild(
-                root.ownerDocument!!.createTextNode(this)
+             node.appendChild(
+                node.ownerDocument!!.createTextNode(this)
             )
         }
     }
 
+    public inline fun attributes(
+        crossinline block: T.() -> Unit
+    ) {
+        node.block()
+    }
+
 }
 
-public inline val NodeBuilder.dataset: DataBuilder get() = DataBuilder(
-    root.unsafeCast<HTMLElement>()
+public inline val <T: HTMLElement> NodeBuilder<T>.dataset: DataBuilder get() = DataBuilder(
+    element = node
 )
 
 public class DataBuilder(
@@ -137,6 +143,6 @@ public class DataBuilder(
 
 }
 
-public inline var NodeBuilder.hidden: Boolean
-    get() = root.unsafeCast<HTMLElement>().hidden
-    set(value) { root.unsafeCast<HTMLElement>().hidden = value }
+public inline var <T : HTMLElement> NodeBuilder<T>.hidden: Boolean
+    get() = node.hidden
+    set(value) { node.hidden = value }

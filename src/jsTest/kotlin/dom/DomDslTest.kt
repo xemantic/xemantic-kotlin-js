@@ -47,8 +47,10 @@ class DomDslTest {
                         +"Hello World"
                     }
                     a(href = "https://example.com")
-                    "my:component"("bar") {
-                        it.id = "component-1"
+                    "my:component"("bar", id = "component-1") {
+                        div {
+                            +"Foo"
+                        }
                     }
                 }
             }
@@ -61,6 +63,7 @@ class DomDslTest {
                 <div class="foo">
                   <button class="large" aria-label="Hello World" data-my-test="hello-button">Hello World</button><a href="https://example.com"></a>
                   <my:component class="bar" id="component-1">
+                    <div>Foo</div>
                   </my:component>
                 </div>
               </body>

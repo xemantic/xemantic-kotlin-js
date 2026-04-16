@@ -21,26 +21,26 @@ import org.w3c.dom.GlobalEventHandlers
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.MouseEvent
 
-public inline fun NodeBuilder.onClick(
+public inline fun NodeBuilder<*>.onClick(
     crossinline block: (MouseEvent) -> Unit
 ) {
-    root.unsafeCast<GlobalEventHandlers>().onclick = {
+    node.unsafeCast<GlobalEventHandlers>().onclick = {
         block(it)
     }
 }
 
-public inline fun NodeBuilder.onSubmit(
+public inline fun NodeBuilder<*>.onSubmit(
     crossinline block: (Event) -> Unit
 ) {
-    root.unsafeCast<GlobalEventHandlers>().onsubmit = {
+    node.unsafeCast<GlobalEventHandlers>().onsubmit = {
         block(it)
     }
 }
 
-public inline fun NodeBuilder.onInput(
+public inline fun NodeBuilder<*>.onInput(
     crossinline block: (Event) -> Unit
 ) {
-    root.unsafeCast<GlobalEventHandlers>().oninput = {
+    node.unsafeCast<GlobalEventHandlers>().oninput = {
         block(it)
     }
 }

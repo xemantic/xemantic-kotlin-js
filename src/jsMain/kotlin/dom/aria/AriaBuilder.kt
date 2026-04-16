@@ -43,6 +43,6 @@ public class AriaBuilder(
 
 public inline val Element.aria: AriaBuilder get() = AriaBuilder(this)
 
-public inline val NodeBuilder.aria: AriaBuilder get() = AriaBuilder(
-    element = root.unsafeCast<Element>()
+public inline val <T : Element> NodeBuilder<T>.aria: AriaBuilder get() = AriaBuilder(
+    element = node
 )

@@ -23,812 +23,822 @@ import org.w3c.dom.*
 
 // region Document structure
 
-public inline fun NodeBuilder.html(
+public inline fun NodeBuilder<*>.html(
     klass: String? = null,
     lang: String? = null,
-    crossinline block: NodeBuilder.(HTMLHtmlElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHtmlElement>.() -> Unit = {}
 ): HTMLHtmlElement = element("html", klass) {
-    if (lang != null) { it.lang = lang }
-    block(it)
+    if (lang != null) { node.lang = lang }
+    block()
 }
 
-public inline fun NodeBuilder.head(
-    crossinline block: NodeBuilder.(HTMLHeadElement) -> Unit = {}
+public inline fun NodeBuilder<*>.head(
+    crossinline block: NodeBuilder<HTMLHeadElement>.() -> Unit = {}
 ): HTMLHeadElement = element("head", block = block)
 
-public inline fun NodeBuilder.body(
+public inline fun NodeBuilder<*>.body(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLBodyElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLBodyElement>.() -> Unit = {}
 ): HTMLBodyElement = element("body", klass, block = block)
 
-public inline fun NodeBuilder.title(
-    crossinline block: NodeBuilder.(HTMLTitleElement) -> Unit = {}
+public inline fun NodeBuilder<*>.title(
+    crossinline block: NodeBuilder<HTMLTitleElement>.() -> Unit = {}
 ): HTMLTitleElement = element("title", block = block)
 
 // endregion
 
 // region Metadata and scripting
 
-public inline fun NodeBuilder.base(
-    crossinline block: HTMLBaseElement.() -> Unit = {}
+public inline fun NodeBuilder<*>.base(
+    href: String? = null,
+    target: String? = null,
+    crossinline block: NodeBuilder<HTMLBaseElement>.() -> Unit = {}
 ): HTMLBaseElement = element("base") {
-    it.block()
+    if (href != null) { node.href = href }
+    if (target != null) { node.target = target }
+    block()
 }
 
-public inline fun NodeBuilder.link(
+public inline fun NodeBuilder<*>.link(
     href: String? = null,
     rel: String? = null,
-    crossinline block: HTMLLinkElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLLinkElement>.() -> Unit = {}
 ): HTMLLinkElement = element("link") {
-    if (href != null) { it.href = href }
-    if (rel != null) { it.rel = rel }
-    it.block()
+    if (href != null) { node.href = href }
+    if (rel != null) { node.rel = rel }
+    block()
 }
 
-public inline fun NodeBuilder.meta(
+public inline fun NodeBuilder<*>.meta(
     name: String? = null,
     content: String? = null,
-    crossinline block: HTMLMetaElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLMetaElement>.() -> Unit = {}
 ): HTMLMetaElement = element("meta") {
-    if (name != null) { it.name = name }
-    if (content != null) { it.content = content }
-    it.block()
+    if (name != null) { node.name = name }
+    if (content != null) { node.content = content }
+    block()
 }
 
-public inline fun NodeBuilder.style(
-    crossinline block: NodeBuilder.(HTMLStyleElement) -> Unit = {}
+public inline fun NodeBuilder<*>.style(
+    crossinline block: NodeBuilder<HTMLStyleElement>.() -> Unit = {}
 ): HTMLStyleElement = element("style", block = block)
 
-public inline fun NodeBuilder.script(
+public inline fun NodeBuilder<*>.script(
     src: String? = null,
-    crossinline block: NodeBuilder.(HTMLScriptElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLScriptElement>.() -> Unit = {}
 ): HTMLScriptElement = element("script") {
-    if (src != null) { it.src = src }
-    block(it)
+    if (src != null) { node.src = src }
+    block()
 }
 
-public inline fun NodeBuilder.noscript(
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+public inline fun NodeBuilder<*>.noscript(
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("noscript", block = block)
 
 // endregion
 
 // region Sections
 
-public inline fun NodeBuilder.header(
+public inline fun NodeBuilder<*>.header(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("header", klass, id, block)
 
-public inline fun NodeBuilder.footer(
+public inline fun NodeBuilder<*>.footer(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("footer", klass, id, block)
 
-public inline fun NodeBuilder.main(
+public inline fun NodeBuilder<*>.main(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("main", klass, id, block)
 
-public inline fun NodeBuilder.nav(
+public inline fun NodeBuilder<*>.nav(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("nav", klass, id, block)
 
-public inline fun NodeBuilder.section(
+public inline fun NodeBuilder<*>.section(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("section", klass, id, block)
 
-public inline fun NodeBuilder.article(
+public inline fun NodeBuilder<*>.article(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("article", klass, id, block)
 
-public inline fun NodeBuilder.aside(
+public inline fun NodeBuilder<*>.aside(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("aside", klass, id, block)
 
-public inline fun NodeBuilder.address(
+public inline fun NodeBuilder<*>.address(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("address", klass, id, block)
 
-public inline fun NodeBuilder.hgroup(
+public inline fun NodeBuilder<*>.hgroup(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("hgroup", klass, id, block)
 
-public inline fun NodeBuilder.search(
+public inline fun NodeBuilder<*>.search(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("search", klass, id, block)
 
 // endregion
 
 // region Headings
 
-public inline fun NodeBuilder.h1(
+public inline fun NodeBuilder<*>.h1(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h1", klass, id, block)
 
-public inline fun NodeBuilder.h2(
+public inline fun NodeBuilder<*>.h2(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h2", klass, id, block)
 
-public inline fun NodeBuilder.h3(
+public inline fun NodeBuilder<*>.h3(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h3", klass, id, block)
 
-public inline fun NodeBuilder.h4(
+public inline fun NodeBuilder<*>.h4(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h4", klass, id, block)
 
-public inline fun NodeBuilder.h5(
+public inline fun NodeBuilder<*>.h5(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h5", klass, id, block)
 
-public inline fun NodeBuilder.h6(
+public inline fun NodeBuilder<*>.h6(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLHeadingElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLHeadingElement>.() -> Unit = {}
 ): HTMLHeadingElement = element("h6", klass, id, block)
 
 // endregion
 
 // region Grouping content
 
-public inline fun NodeBuilder.div(
+public inline fun NodeBuilder<*>.div(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLDivElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLDivElement>.() -> Unit = {}
 ): HTMLDivElement = element("div", klass, id, block)
 
-public inline fun NodeBuilder.p(
+public inline fun NodeBuilder<*>.p(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLParagraphElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLParagraphElement>.() -> Unit = {}
 ): HTMLParagraphElement = element("p", klass, block = block)
 
-public inline fun NodeBuilder.pre(
+public inline fun NodeBuilder<*>.pre(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLPreElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLPreElement>.() -> Unit = {}
 ): HTMLPreElement = element("pre", klass, block = block)
 
-public inline fun NodeBuilder.blockquote(
+public inline fun NodeBuilder<*>.blockquote(
     klass: String? = null,
     cite: String? = null,
-    crossinline block: NodeBuilder.(HTMLQuoteElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLQuoteElement>.() -> Unit = {}
 ): HTMLQuoteElement = element("blockquote", klass) {
-    if (cite != null) { it.cite = cite }
-    block(it)
+    if (cite != null) { node.cite = cite }
+    block()
 }
 
-public inline fun NodeBuilder.figure(
+public inline fun NodeBuilder<*>.figure(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("figure", klass, block = block)
 
-public inline fun NodeBuilder.figcaption(
+public inline fun NodeBuilder<*>.figcaption(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("figcaption", klass, block = block)
 
-public inline fun NodeBuilder.hr(
+public inline fun NodeBuilder<*>.hr(
     klass: String? = null,
-    crossinline block: HTMLHRElement.() -> Unit = {}
-): HTMLHRElement = element("hr", klass) {
-    it.block()
-}
+    crossinline block: NodeBuilder<HTMLHRElement>.() -> Unit = {}
+): HTMLHRElement = element("hr", klass, block = block)
 
 // endregion
 
 // region Lists
 
-public inline fun NodeBuilder.ul(
+public inline fun NodeBuilder<*>.ul(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLUListElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLUListElement>.() -> Unit = {}
 ): HTMLUListElement = element("ul", klass, block = block)
 
-public inline fun NodeBuilder.ol(
+public inline fun NodeBuilder<*>.ol(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLOListElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLOListElement>.() -> Unit = {}
 ): HTMLOListElement = element("ol", klass, block = block)
 
-public inline fun NodeBuilder.li(
+public inline fun NodeBuilder<*>.li(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLLIElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLLIElement>.() -> Unit = {}
 ): HTMLLIElement = element("li", klass, block = block)
 
-public inline fun NodeBuilder.dl(
+public inline fun NodeBuilder<*>.dl(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("dl", klass, block = block)
 
-public inline fun NodeBuilder.dt(
+public inline fun NodeBuilder<*>.dt(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("dt", klass, block = block)
 
-public inline fun NodeBuilder.dd(
+public inline fun NodeBuilder<*>.dd(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("dd", klass, block = block)
 
-public inline fun NodeBuilder.menu(
+public inline fun NodeBuilder<*>.menu(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("menu", klass, block = block)
 
 // endregion
 
 // region Tables
 
-public inline fun NodeBuilder.table(
+public inline fun NodeBuilder<*>.table(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableElement>.() -> Unit = {}
 ): HTMLTableElement = element("table", klass, id, block)
 
-public inline fun NodeBuilder.caption(
+public inline fun NodeBuilder<*>.caption(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableCaptionElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableCaptionElement>.() -> Unit = {}
 ): HTMLTableCaptionElement = element("caption", klass, block = block)
 
-public inline fun NodeBuilder.thead(
+public inline fun NodeBuilder<*>.thead(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableSectionElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableSectionElement>.() -> Unit = {}
 ): HTMLTableSectionElement = element("thead", klass, block = block)
 
-public inline fun NodeBuilder.tbody(
+public inline fun NodeBuilder<*>.tbody(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableSectionElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableSectionElement>.() -> Unit = {}
 ): HTMLTableSectionElement = element("tbody", klass, block = block)
 
-public inline fun NodeBuilder.tfoot(
+public inline fun NodeBuilder<*>.tfoot(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableSectionElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableSectionElement>.() -> Unit = {}
 ): HTMLTableSectionElement = element("tfoot", klass, block = block)
 
-public inline fun NodeBuilder.tr(
+public inline fun NodeBuilder<*>.tr(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableRowElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableRowElement>.() -> Unit = {}
 ): HTMLTableRowElement = element("tr", klass, block = block)
 
-public inline fun NodeBuilder.th(
+public inline fun NodeBuilder<*>.th(
     klass: String? = null,
     scope: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableCellElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableCellElement>.() -> Unit = {}
 ): HTMLTableCellElement = element("th", klass) {
-    if (scope != null) { it.scope = scope }
-    block(it)
+    if (scope != null) { node.scope = scope }
+    block()
 }
 
-public inline fun NodeBuilder.td(
+public inline fun NodeBuilder<*>.td(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableCellElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableCellElement>.() -> Unit = {}
 ): HTMLTableCellElement = element("td", klass, block = block)
 
-public inline fun NodeBuilder.colgroup(
+public inline fun NodeBuilder<*>.colgroup(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLTableColElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableColElement>.() -> Unit = {}
 ): HTMLTableColElement = element("colgroup", klass, block = block)
 
-public inline fun NodeBuilder.col(
+public inline fun NodeBuilder<*>.col(
     klass: String? = null,
     span: Int? = null,
-    crossinline block: HTMLTableColElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTableColElement>.() -> Unit = {}
 ): HTMLTableColElement = element("col", klass) {
-    if (span != null) { it.span = span }
-    it.block()
+    if (span != null) { node.span = span }
+    block()
 }
 
 // endregion
 
 // region Text-level semantics
 
-public inline fun NodeBuilder.span(
+public inline fun NodeBuilder<*>.span(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLSpanElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLSpanElement>.() -> Unit = {}
 ): HTMLSpanElement = element("span", klass, block = block)
 
-public inline fun NodeBuilder.a(
+public inline fun NodeBuilder<*>.a(
     klass: String? = null,
     href: String? = null,
     target: String? = null,
-    crossinline block: NodeBuilder.(HTMLAnchorElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLAnchorElement>.() -> Unit = {}
 ): HTMLAnchorElement = element("a", klass) {
-    if (href != null) { it.href = href }
-    if (target != null) { it.target = target }
-    block(it)
+    if (href != null) { node.href = href }
+    if (target != null) { node.target = target }
+    block()
 }
 
-public inline fun NodeBuilder.strong(
+public inline fun NodeBuilder<*>.strong(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("strong", klass, block = block)
 
-public inline fun NodeBuilder.em(
+public inline fun NodeBuilder<*>.em(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("em", klass, block = block)
 
-public inline fun NodeBuilder.b(
+public inline fun NodeBuilder<*>.b(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("b", klass, block = block)
 
-public inline fun NodeBuilder.i(
+public inline fun NodeBuilder<*>.i(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("i", klass, block = block)
 
-public inline fun NodeBuilder.u(
+public inline fun NodeBuilder<*>.u(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("u", klass, block = block)
 
-public inline fun NodeBuilder.s(
+public inline fun NodeBuilder<*>.s(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("s", klass, block = block)
 
-public inline fun NodeBuilder.small(
+public inline fun NodeBuilder<*>.small(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("small", klass, block = block)
 
-public inline fun NodeBuilder.mark(
+public inline fun NodeBuilder<*>.mark(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("mark", klass, block = block)
 
-public inline fun NodeBuilder.sub(
+public inline fun NodeBuilder<*>.sub(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("sub", klass, block = block)
 
-public inline fun NodeBuilder.sup(
+public inline fun NodeBuilder<*>.sup(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("sup", klass, block = block)
 
-public inline fun NodeBuilder.abbr(
+public inline fun NodeBuilder<*>.abbr(
     klass: String? = null,
     title: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("abbr", klass) {
-    if (title != null) { it.title = title }
-    block(it)
+    if (title != null) { node.title = title }
+    block()
 }
 
-public inline fun NodeBuilder.cite(
+public inline fun NodeBuilder<*>.cite(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("cite", klass, block = block)
 
-public inline fun NodeBuilder.code(
+public inline fun NodeBuilder<*>.code(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("code", klass, block = block)
 
-public inline fun NodeBuilder.dfn(
+public inline fun NodeBuilder<*>.dfn(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("dfn", klass, block = block)
 
-public inline fun NodeBuilder.kbd(
+public inline fun NodeBuilder<*>.kbd(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("kbd", klass, block = block)
 
-public inline fun NodeBuilder.samp(
+public inline fun NodeBuilder<*>.samp(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("samp", klass, block = block)
 
-public inline fun NodeBuilder.`var`(
+public inline fun NodeBuilder<*>.`var`(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("var", klass, block = block)
 
-public inline fun NodeBuilder.q(
+public inline fun NodeBuilder<*>.q(
     klass: String? = null,
     cite: String? = null,
-    crossinline block: NodeBuilder.(HTMLQuoteElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLQuoteElement>.() -> Unit = {}
 ): HTMLQuoteElement = element("q", klass) {
-    if (cite != null) { it.cite = cite }
-    block(it)
+    if (cite != null) { node.cite = cite }
+    block()
 }
 
-public inline fun NodeBuilder.time(
+public inline fun NodeBuilder<*>.time(
     klass: String? = null,
     dateTime: String? = null,
-    crossinline block: NodeBuilder.(HTMLTimeElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTimeElement>.() -> Unit = {}
 ): HTMLTimeElement = element("time", klass) {
-    if (dateTime != null) { it.dateTime = dateTime }
-    block(it)
+    if (dateTime != null) { node.dateTime = dateTime }
+    block()
 }
 
-public inline fun NodeBuilder.data(
+public inline fun NodeBuilder<*>.data(
     klass: String? = null,
     value: String? = null,
-    crossinline block: NodeBuilder.(HTMLDataElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLDataElement>.() -> Unit = {}
 ): HTMLDataElement = element("data", klass) {
-    if (value != null) { it.value = value }
-    block(it)
+    if (value != null) { node.value = value }
+    block()
 }
 
-public inline fun NodeBuilder.ins(
+public inline fun NodeBuilder<*>.ins(
     klass: String? = null,
     cite: String? = null,
     dateTime: String? = null,
-    crossinline block: NodeBuilder.(HTMLModElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLModElement>.() -> Unit = {}
 ): HTMLModElement = element("ins", klass) {
-    if (cite != null) { it.cite = cite }
-    if (dateTime != null) { it.dateTime = dateTime }
-    block(it)
+    if (cite != null) { node.cite = cite }
+    if (dateTime != null) { node.dateTime = dateTime }
+    block()
 }
 
-public inline fun NodeBuilder.del(
+public inline fun NodeBuilder<*>.del(
     klass: String? = null,
     cite: String? = null,
     dateTime: String? = null,
-    crossinline block: NodeBuilder.(HTMLModElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLModElement>.() -> Unit = {}
 ): HTMLModElement = element("del", klass) {
-    if (cite != null) { it.cite = cite }
-    if (dateTime != null) { it.dateTime = dateTime }
-    block(it)
+    if (cite != null) { node.cite = cite }
+    if (dateTime != null) { node.dateTime = dateTime }
+    block()
 }
 
-public inline fun NodeBuilder.ruby(
+public inline fun NodeBuilder<*>.ruby(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("ruby", klass, block = block)
 
-public inline fun NodeBuilder.rt(
+public inline fun NodeBuilder<*>.rt(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("rt", klass, block = block)
 
-public inline fun NodeBuilder.rp(
+public inline fun NodeBuilder<*>.rp(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("rp", klass, block = block)
 
-public inline fun NodeBuilder.bdi(
+public inline fun NodeBuilder<*>.bdi(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("bdi", klass, block = block)
 
-public inline fun NodeBuilder.bdo(
+public inline fun NodeBuilder<*>.bdo(
     klass: String? = null,
     dir: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("bdo", klass) {
-    if (dir != null) { it.dir = dir }
-    block(it)
+    if (dir != null) { node.dir = dir }
+    block()
 }
 
-public inline fun NodeBuilder.br(
-    crossinline block: HTMLBRElement.() -> Unit = {}
-): HTMLBRElement = element("br") {
-    it.block()
-}
+public inline fun NodeBuilder<*>.br(
+    crossinline block: NodeBuilder<HTMLBRElement>.() -> Unit = {}
+): HTMLBRElement = element("br", block = block)
 
-public inline fun NodeBuilder.wbr(
-    crossinline block: HTMLElement.() -> Unit = {}
-): HTMLElement = element("wbr") {
-    it.block()
-}
+public inline fun NodeBuilder<*>.wbr(
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
+): HTMLElement = element("wbr", block = block)
 
 // endregion
 
 // region Forms
 
-public inline fun NodeBuilder.form(
+public inline fun NodeBuilder<*>.form(
     klass: String? = null,
     id: String? = null,
     action: String? = null,
     method: String? = null,
-    crossinline block: NodeBuilder.(HTMLFormElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLFormElement>.() -> Unit = {}
 ): HTMLFormElement = element("form", klass, id) {
-    if (action != null) { it.action = action }
-    if (method != null) { it.method = method }
-    block(it)
+    if (action != null) { node.action = action }
+    if (method != null) { node.method = method }
+    block()
 }
 
-public inline fun NodeBuilder.fieldset(
+public inline fun NodeBuilder<*>.fieldset(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLFieldSetElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLFieldSetElement>.() -> Unit = {}
 ): HTMLFieldSetElement = element("fieldset", klass, block = block)
 
-public inline fun NodeBuilder.legend(
+public inline fun NodeBuilder<*>.legend(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLLegendElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLLegendElement>.() -> Unit = {}
 ): HTMLLegendElement = element("legend", klass, block = block)
 
-public inline fun NodeBuilder.label(
+public inline fun NodeBuilder<*>.label(
     klass: String? = null,
     htmlFor: String? = null,
-    crossinline block: NodeBuilder.(HTMLLabelElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLLabelElement>.() -> Unit = {}
 ): HTMLLabelElement = element("label", klass) {
-    if (htmlFor != null) { it.htmlFor = htmlFor }
-    block(it)
+    if (htmlFor != null) { node.htmlFor = htmlFor }
+    block()
 }
 
-public inline fun NodeBuilder.input(
+public inline fun NodeBuilder<*>.input(
     klass: String? = null,
     id: String? = null,
     name: String? = null,
     type: String? = null,
     placeholder: String? = null,
     value: String? = null,
-    crossinline block: NodeBuilder.(HTMLInputElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLInputElement>.() -> Unit = {}
 ): HTMLInputElement = element("input", klass, id) {
-    if (name != null) { it.name = name }
-    if (type != null) { it.type = type }
-    if (placeholder != null) { it.placeholder = placeholder }
-    if (value != null) { it.value = value }
-    block(it)
+    if (name != null) { node.name = name }
+    if (type != null) { node.type = type }
+    if (placeholder != null) { node.placeholder = placeholder }
+    if (value != null) { node.value = value }
+    block()
 }
 
-public inline fun NodeBuilder.button(
+public inline fun NodeBuilder<*>.button(
     klass: String? = null,
     id: String? = null,
     type: String? = null,
-    crossinline block: NodeBuilder.(HTMLButtonElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLButtonElement>.() -> Unit = {}
 ): HTMLButtonElement = element("button", klass, id) {
-    if (type != null) { it.type = type }
-    block(it)
+    if (type != null) { node.type = type }
+    block()
 }
 
-public inline fun NodeBuilder.select(
+public inline fun NodeBuilder<*>.select(
     klass: String? = null,
     id: String? = null,
     name: String? = null,
-    crossinline block: NodeBuilder.(HTMLSelectElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLSelectElement>.() -> Unit = {}
 ): HTMLSelectElement = element("select", klass, id) {
-    if (name != null) { it.name = name }
-    block(it)
+    if (name != null) { node.name = name }
+    block()
 }
 
-public inline fun NodeBuilder.option(
+public inline fun NodeBuilder<*>.option(
     klass: String? = null,
     value: String? = null,
-    crossinline block: NodeBuilder.(HTMLOptionElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLOptionElement>.() -> Unit = {}
 ): HTMLOptionElement = element("option", klass) {
-    if (value != null) { it.value = value }
-    block(it)
+    if (value != null) { node.value = value }
+    block()
 }
 
-public inline fun NodeBuilder.optgroup(
+public inline fun NodeBuilder<*>.optgroup(
     klass: String? = null,
     label: String? = null,
-    crossinline block: NodeBuilder.(HTMLOptGroupElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLOptGroupElement>.() -> Unit = {}
 ): HTMLOptGroupElement = element("optgroup", klass) {
-    if (label != null) { it.label = label }
-    block(it)
+    if (label != null) { node.label = label }
+    block()
 }
 
-public inline fun NodeBuilder.textarea(
+public inline fun NodeBuilder<*>.textarea(
     klass: String? = null,
     id: String? = null,
     name: String? = null,
     placeholder: String? = null,
-    crossinline block: NodeBuilder.(HTMLTextAreaElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTextAreaElement>.() -> Unit = {}
 ): HTMLTextAreaElement = element("textarea", klass, id) {
-    if (name != null) { it.name = name }
-    if (placeholder != null) { it.placeholder = placeholder }
-    block(it)
+    if (name != null) { node.name = name }
+    if (placeholder != null) { node.placeholder = placeholder }
+    block()
 }
 
-public inline fun NodeBuilder.output(
+public inline fun NodeBuilder<*>.output(
     klass: String? = null,
     id: String? = null,
     name: String? = null,
-    crossinline block: NodeBuilder.(HTMLOutputElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLOutputElement>.() -> Unit = {}
 ): HTMLOutputElement = element("output", klass, id) {
-    if (name != null) { it.name = name }
-    block(it)
+    if (name != null) { node.name = name }
+    block()
 }
 
-public inline fun NodeBuilder.datalist(
+public inline fun NodeBuilder<*>.datalist(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLDataListElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLDataListElement>.() -> Unit = {}
 ): HTMLDataListElement = element("datalist", klass, id, block)
 
-public inline fun NodeBuilder.meter(
+public inline fun NodeBuilder<*>.meter(
     klass: String? = null,
     value: Double? = null,
     min: Double? = null,
     max: Double? = null,
-    crossinline block: NodeBuilder.(HTMLMeterElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLMeterElement>.() -> Unit = {}
 ): HTMLMeterElement = element("meter", klass) {
-    if (value != null) { it.value = value }
-    if (min != null) { it.min = min }
-    if (max != null) { it.max = max }
-    block(it)
+    if (value != null) { node.value = value }
+    if (min != null) { node.min = min }
+    if (max != null) { node.max = max }
+    block()
 }
 
-public inline fun NodeBuilder.progress(
+public inline fun NodeBuilder<*>.progress(
     klass: String? = null,
     value: Double? = null,
     max: Double? = null,
-    crossinline block: NodeBuilder.(HTMLProgressElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLProgressElement>.() -> Unit = {}
 ): HTMLProgressElement = element("progress", klass) {
-    if (value != null) { it.value = value }
-    if (max != null) { it.max = max }
-    block(it)
+    if (value != null) { node.value = value }
+    if (max != null) { node.max = max }
+    block()
 }
 
 // endregion
 
 // region Embedded content
 
-public inline fun NodeBuilder.img(
+public inline fun NodeBuilder<*>.img(
     klass: String? = null,
     id: String? = null,
     src: String? = null,
     alt: String? = null,
-    crossinline block: HTMLImageElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLImageElement>.() -> Unit = {}
 ): HTMLImageElement = element("img", klass, id) {
-    if (src != null) { it.src = src }
-    if (alt != null) { it.alt = alt }
-    it.block()
+    if (src != null) { node.src = src }
+    if (alt != null) { node.alt = alt }
+    block()
 }
 
-public inline fun NodeBuilder.picture(
+public inline fun NodeBuilder<*>.picture(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLPictureElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLPictureElement>.() -> Unit = {}
 ): HTMLPictureElement = element("picture", klass, block = block)
 
-public inline fun NodeBuilder.source(
-    crossinline block: HTMLSourceElement.() -> Unit = {}
+public inline fun NodeBuilder<*>.source(
+    src: String? = null,
+    type: String? = null,
+    srcset: String? = null,
+    media: String? = null,
+    crossinline block: NodeBuilder<HTMLSourceElement>.() -> Unit = {}
 ): HTMLSourceElement = element("source") {
-    it.block()
+    if (src != null) { node.src = src }
+    if (type != null) { node.type = type }
+    if (srcset != null) { node.srcset = srcset }
+    if (media != null) { node.media = media }
+    block()
 }
 
-public inline fun NodeBuilder.iframe(
+public inline fun NodeBuilder<*>.iframe(
     klass: String? = null,
     id: String? = null,
     src: String? = null,
-    crossinline block: HTMLIFrameElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLIFrameElement>.() -> Unit = {}
 ): HTMLIFrameElement = element("iframe", klass, id) {
-    if (src != null) { it.src = src }
-    it.block()
+    if (src != null) { node.src = src }
+    block()
 }
 
-public inline fun NodeBuilder.embed(
+public inline fun NodeBuilder<*>.embed(
     klass: String? = null,
     src: String? = null,
     type: String? = null,
-    crossinline block: HTMLEmbedElement.() -> Unit = {}
+    crossinline block: NodeBuilder<HTMLEmbedElement>.() -> Unit = {}
 ): HTMLEmbedElement = element("embed", klass) {
-    if (src != null) { it.src = src }
-    if (type != null) { it.type = type }
-    it.block()
+    if (src != null) { node.src = src }
+    if (type != null) { node.type = type }
+    block()
 }
 
-public inline fun NodeBuilder.`object`(
+public inline fun NodeBuilder<*>.`object`(
     klass: String? = null,
     data: String? = null,
     type: String? = null,
-    crossinline block: NodeBuilder.(HTMLObjectElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLObjectElement>.() -> Unit = {}
 ): HTMLObjectElement = element("object", klass) {
-    if (data != null) { it.data = data }
-    if (type != null) { it.type = type }
-    block(it)
+    if (data != null) { node.data = data }
+    if (type != null) { node.type = type }
+    block()
 }
 
-public inline fun NodeBuilder.video(
+public inline fun NodeBuilder<*>.video(
     klass: String? = null,
     id: String? = null,
     src: String? = null,
-    crossinline block: NodeBuilder.(HTMLVideoElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLVideoElement>.() -> Unit = {}
 ): HTMLVideoElement = element("video", klass, id) {
-    if (src != null) { it.src = src }
-    block(it)
+    if (src != null) { node.src = src }
+    block()
 }
 
-public inline fun NodeBuilder.audio(
+public inline fun NodeBuilder<*>.audio(
     klass: String? = null,
     id: String? = null,
     src: String? = null,
-    crossinline block: NodeBuilder.(HTMLAudioElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLAudioElement>.() -> Unit = {}
 ): HTMLAudioElement = element("audio", klass, id) {
-    if (src != null) { it.src = src }
-    block(it)
+    if (src != null) { node.src = src }
+    block()
 }
 
-public inline fun NodeBuilder.track(
-    crossinline block: HTMLTrackElement.() -> Unit = {}
+public inline fun NodeBuilder<*>.track(
+    src: String? = null,
+    kind: String? = null,
+    srclang: String? = null,
+    label: String? = null,
+    crossinline block: NodeBuilder<HTMLTrackElement>.() -> Unit = {}
 ): HTMLTrackElement = element("track") {
-    it.block()
+    if (src != null) { node.src = src }
+    if (kind != null) { node.kind = kind }
+    if (srclang != null) { node.srclang = srclang }
+    if (label != null) { node.label = label }
+    block()
 }
 
-public inline fun NodeBuilder.canvas(
+public inline fun NodeBuilder<*>.canvas(
     klass: String? = null,
     id: String? = null,
-    crossinline block: HTMLCanvasElement.() -> Unit = {}
-): HTMLCanvasElement = element("canvas", klass, id) {
-    it.block()
-}
+    crossinline block: NodeBuilder<HTMLCanvasElement>.() -> Unit = {}
+): HTMLCanvasElement = element("canvas", klass, id, block)
 
-public inline fun NodeBuilder.map(
+public inline fun NodeBuilder<*>.map(
     klass: String? = null,
     id: String? = null,
     name: String? = null,
-    crossinline block: NodeBuilder.(HTMLMapElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLMapElement>.() -> Unit = {}
 ): HTMLMapElement = element("map", klass, id) {
-    if (name != null) { it.name = name }
-    block(it)
+    if (name != null) { node.name = name }
+    block()
 }
 
-public inline fun NodeBuilder.area(
-    crossinline block: HTMLAreaElement.() -> Unit = {}
-): HTMLAreaElement = element("area") {
-    it.block()
-}
+public inline fun NodeBuilder<*>.area(
+    crossinline block: NodeBuilder<HTMLAreaElement>.() -> Unit = {}
+): HTMLAreaElement = element("area", block = block)
 
 // endregion
 
 // region Interactive
 
-public inline fun NodeBuilder.details(
+public inline fun NodeBuilder<*>.details(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLDetailsElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLDetailsElement>.() -> Unit = {}
 ): HTMLDetailsElement = element("details", klass, id, block)
 
-public inline fun NodeBuilder.summary(
+public inline fun NodeBuilder<*>.summary(
     klass: String? = null,
-    crossinline block: NodeBuilder.(HTMLElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
 ): HTMLElement = element("summary", klass, block = block)
 
-public inline fun NodeBuilder.dialog(
+public inline fun NodeBuilder<*>.dialog(
     klass: String? = null,
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLDialogElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLDialogElement>.() -> Unit = {}
 ): HTMLDialogElement = element("dialog", klass, id, block)
 
 // endregion
 
 // region Template and slots
 
-public inline fun NodeBuilder.template(
+public inline fun NodeBuilder<*>.template(
     id: String? = null,
-    crossinline block: NodeBuilder.(HTMLTemplateElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLTemplateElement>.() -> Unit = {}
 ): HTMLTemplateElement = element("template", id = id, block = block)
 
-public inline fun NodeBuilder.slot(
+public inline fun NodeBuilder<*>.slot(
     klass: String? = null,
     name: String? = null,
-    crossinline block: NodeBuilder.(HTMLSlotElement) -> Unit = {}
+    crossinline block: NodeBuilder<HTMLSlotElement>.() -> Unit = {}
 ): HTMLSlotElement = element("slot", klass) {
-    if (name != null) { it.name = name }
-    block(it)
+    if (name != null) { node.name = name }
+    block()
 }
 
 // endregion
@@ -836,10 +846,10 @@ public inline fun NodeBuilder.slot(
 // region Helpers
 
 @Suppress("NOTHING_TO_INLINE")
-public inline fun NodeBuilder.icon(
+public inline fun NodeBuilder<*>.icon(
     name: String
 ): HTMLElement = i {
-    aria.hidden = true
+    node.aria.hidden = true
     +name
 }
 

@@ -98,8 +98,8 @@ class EventsTest {
         // given
         var inputValue = ""
         val div = node.div {
-            input(type = "text", name = "test") { input ->
-                onInput { inputValue = input.value }
+            input(type = "text", name = "test") {
+                onInput { inputValue = node.value }
             }
         }
 

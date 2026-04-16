@@ -38,28 +38,28 @@ fun loginView(
 
     div("field label border round prefix") {
         icon("mail")
-        input("large border", name = "username", type = "text") { input ->
+        input("large border", name = "username", type = "text") {
             aria.label = "Username"
-            onInput { viewModel.onUsernameChanged(input.value) }
+            onInput { viewModel.onUsernameChanged(node.value) }
         }
         label { +"Username" }
     }
 
     div("field label border round prefix") {
         icon("key")
-        input("large border", name = "password", type = "password") { input ->
+        input("large border", name = "password", type = "password") {
             aria.label = "Password"
-            onInput { viewModel.onPasswordChanged(input.value) }
+            onInput { viewModel.onPasswordChanged(node.value) }
         }
         label { +"Password" }
     }
 
     nav("no-space") {
-        button("large", type = "submit") { button ->
+        button("large", type = "submit") {
             aria.label = "Submit"
             onClick { viewModel.onSubmit() }
             viewModel.submitEnabled.onEach { enabled ->
-                button.disabled = !enabled
+                node.disabled = !enabled
             }.launchIn(viewModel.scope)
             +"Submit"
         }
@@ -74,7 +74,8 @@ fun loginView(
         }.launchIn(viewModel.scope)
     }
 
-    div("snackbar") { snackbar ->
+    div("snackbar") {
+        val snackbar = node
         role = "alert"
         icon("warning")
         val errorSpan = span()
