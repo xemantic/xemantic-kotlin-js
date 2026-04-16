@@ -29,7 +29,7 @@ The core feature is a type-safe DSL for building DOM trees:
 
 - **DomDsl.kt**: Core DSL infrastructure
   - `@DomDsl` marker annotation for scope control
-  - `node` property returning a `NodeBuilder` on a `DocumentFragment` for creating detached DOM trees (e.g., `node.div { }`)
+  - `nodes` property returning a `NodeBuilder` on a `DocumentFragment` for creating detached DOM trees (e.g., `nodes.div { }`)
   - `Node.invoke()` extension to start building children on any existing node
   - `NodeBuilder` class with:
     - `String.invoke()` for arbitrary element names (e.g., `"my:component" { }`)
@@ -53,7 +53,7 @@ The core feature is a type-safe DSL for building DOM trees:
 ### Usage Pattern
 
 ```kotlin
-node.div("className") {
+nodes.div("className") {
     button("btn") {
         aria.label = "Click me"
         dataset["action"] = "submit"
