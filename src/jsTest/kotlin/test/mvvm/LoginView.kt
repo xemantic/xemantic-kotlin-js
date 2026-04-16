@@ -26,13 +26,13 @@ import com.xemantic.kotlin.js.dom.event.onInput
 import com.xemantic.kotlin.js.dom.event.onSubmit
 import com.xemantic.kotlin.js.dom.hidden
 import com.xemantic.kotlin.js.dom.html.*
-import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.js.dom.nodes
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 fun loginView(
     viewModel: LoginViewModel
-) = node.form("app-login") {
+) = nodes.form("app-login") {
     aria.label = "Login"
     onSubmit { it.preventDefault() }
 

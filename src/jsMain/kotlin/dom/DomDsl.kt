@@ -23,7 +23,7 @@ import org.w3c.dom.*
 @DslMarker
 public annotation class DomDsl
 
-public val node: NodeBuilder<DocumentFragment> get() = NodeBuilder(
+public val nodes: NodeBuilder<DocumentFragment> get() = NodeBuilder(
     node = document.createDocumentFragment()
 )
 
@@ -135,7 +135,7 @@ public class DataBuilder(
         if (value != null) {
             element.dataset[name] = value
         } else {
-            @Suppress("UNUSED_VARIABLE")
+            @Suppress("UnusedVariable")
             val dataset = element.dataset
             js("delete dataset[name]")
         }

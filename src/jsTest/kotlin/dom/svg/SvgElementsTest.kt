@@ -17,7 +17,7 @@
 package com.xemantic.kotlin.js.dom.svg
 
 import com.xemantic.kotlin.js.dom.element.set
-import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.sameAs
 import com.xemantic.markanywhere.js.toSemanticEvents
 import com.xemantic.markanywhere.render.render
@@ -29,7 +29,7 @@ class SvgElementsTest {
     @Test
     fun `should create SVG element tree with all possible SVG tags`() = runTest {
         // when
-        val svg = node.svg("main-image") {
+        val svg = nodes.svg("main-image") {
             node["viewBox"] = "0 0 800 600"
             node["width"] = "800"
             node["height"] = "600"
