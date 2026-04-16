@@ -43,7 +43,7 @@ public class NodeBuilder<T : Node>(
     public inline operator fun String.invoke(
         klass: String? = null,
         id: String? = null,
-        crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
+        crossinline block: NodeBuilder<Element>.() -> Unit = {}
     ): Element = element(name = this, klass, id, block)
 
     public inline fun <E : Element> element(
