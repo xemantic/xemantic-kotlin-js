@@ -65,7 +65,7 @@ class HtmlElementsTest {
     fun `should create metadata elements - base link meta`() = runTest {
         // when
         val head = node.head {
-            base { href = "https://example.com/" }
+            base(href = "https://example.com/")
             link(rel = "stylesheet", href = "style.css")
             meta(name = "viewport", content = "width=device-width")
         }
@@ -353,7 +353,7 @@ class HtmlElementsTest {
                 li { +"Item 3" }
             }
             ol("steps") {
-                it.start = 1
+                node.start = 1
                 li { +"First step" }
                 li { +"Second step" }
             }
@@ -554,7 +554,7 @@ class HtmlElementsTest {
                 span("highlight") { +"Span text" }
                 +" "
                 a("link", href = "https://example.com", target = "_blank") {
-                    it.name = "example"
+                    node.name = "example"
                     +"Link"
                 }
             }
@@ -826,8 +826,11 @@ class HtmlElementsTest {
                     name = "description",
                     placeholder = "Enter description"
                 ) {
-                    it.rows = 4
-                    it.cols = 50
+                    attributes {
+                        rows = 4
+                        cols = 50
+                    }
+
                 }
                 br()
                 select("country-select", name = "country") {
@@ -842,7 +845,7 @@ class HtmlElementsTest {
                 }
                 br()
                 input(id = "browser-input") {
-                    it["list"] = "browsers"
+                    node["list"] = "browsers"
                 }
                 datalist(id = "browsers") {
                     option(value = "Chrome")
@@ -864,7 +867,7 @@ class HtmlElementsTest {
         val body = node.body {
             form {
                 output(name = "result") {
-                    it["for"] = "a b"
+                    node["for"] = "a b"
                     +"0"
                 }
             }
@@ -872,9 +875,11 @@ class HtmlElementsTest {
                 +"70%"
             }
             meter(value = 0.7, min = 0.0, max = 1.0) {
-                it.low = 0.3
-                it.high = 0.7
-                it.optimum = 0.8
+                attributes {
+                    low = 0.3
+                    high = 0.7
+                    optimum = 0.8
+                }
                 +"70%"
             }
         }
@@ -896,12 +901,14 @@ class HtmlElementsTest {
     fun `should create image elements - img picture source`() = runTest {
         val body = node.body {
             img(src = "photo.jpg", alt = "A photo") {
-                width = 300
-                height = 200
+                attributes {
+                    width = 300
+                    height = 200
+                }
             }
             picture("responsive-image") {
-                source { srcset = "photo-large.jpg"; media = "(min-width: 800px)" }
-                source { srcset = "photo-small.jpg"; media = "(max-width: 799px)" }
+                source(srcset = "photo-large.jpg", media = "(min-width: 800px)")
+                source(srcset = "photo-small.jpg", media = "(max-width: 799px)")
                 img(src = "photo.jpg", alt = "A photo")
             }
         }
@@ -916,17 +923,19 @@ class HtmlElementsTest {
     fun `should create media elements - audio video track`() = runTest {
         val body = node.body {
             audio("player") {
-                it.controls = true
-                source { src = "audio.mp3"; type = "audio/mpeg" }
-                source { src = "audio.ogg"; type = "audio/ogg" }
+                node.controls = true
+                source(src = "audio.mp3", type = "audio/mpeg")
+                source(src = "audio.ogg", type = "audio/ogg")
                 +"Your browser does not support audio."
             }
             video("video-player") {
-                it.controls = true
-                it.width = 640
-                it.height = 480
-                source { src = "video.mp4"; type = "video/mp4" }
-                track { src = "subtitles.vtt"; kind = "subtitles"; srclang = "en"; label = "English" }
+                attributes {
+                    controls = true
+                    width = 640
+                    height = 480
+                }
+                source(src = "video.mp4", type = "video/mp4")
+                track(src = "subtitles.vtt", kind = "subtitles", srclang = "en", label = "English")
                 +"Your browser does not support video."
             }
         }
@@ -942,33 +951,43 @@ class HtmlElementsTest {
         // when
         val body = node.body {
             iframe("embedded", src = "https://example.com") {
-                width = "600"
-                height = "400"
-                title = "Example"
+                attributes {
+                    width = "600"
+                    height = "400"
+                    title = "Example"
+                }
             }
             embed(src = "plugin.swf", type = "application/x-shockwave-flash") {
-                width = "400"
-                height = "300"
+                attributes {
+                    width = "400"
+                    height = "300"
+                }
             }
             `object`("media-object", data = "movie.swf", type = "application/x-shockwave-flash") {
                 p { +"Fallback content" }
             }
             canvas("drawing", id = "myCanvas") {
-                width = 400
-                height = 300
+                attributes {
+                    width = 400
+                    height = 300
+                }
             }
             map("image-map", name = "workmap") {
                 area {
-                    shape = "rect"
-                    coords = "34,44,270,350"
-                    alt = "Computer"
-                    href = "computer.html"
+                    attributes {
+                        shape = "rect"
+                        coords = "34,44,270,350"
+                        alt = "Computer"
+                        href = "computer.html"
+                    }
                 }
                 area {
-                    shape = "circle"
-                    coords = "337,300,44"
-                    alt = "Phone"
-                    href = "phone.html"
+                    attributes {
+                        shape = "circle"
+                        coords = "337,300,44"
+                        alt = "Phone"
+                        href = "phone.html"
+                    }
                 }
             }
         }
@@ -995,7 +1014,7 @@ class HtmlElementsTest {
     fun `should create interactive elements - details summary dialog`() = runTest {
         val body = node.body {
             details("collapsible") {
-                it.open = true
+                node.open = true
                 summary { +"Click to expand" }
                 p { +"Hidden content revealed!" }
             }

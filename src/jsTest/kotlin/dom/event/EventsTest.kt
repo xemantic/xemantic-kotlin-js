@@ -23,6 +23,7 @@ import com.xemantic.kotlin.js.dom.html.input
 import com.xemantic.kotlin.js.dom.node
 import com.xemantic.kotlin.test.assert
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.InputEvent
 import org.w3c.dom.events.MouseEvent
 import kotlin.test.Test
 
@@ -98,15 +99,15 @@ class EventsTest {
         // given
         var inputValue = ""
         val div = node.div {
-            input(type = "text", name = "test") { input ->
-                onInput { inputValue = input.value }
+            input(type = "text", name = "test") {
+                onInput { inputValue = node.value }
             }
         }
 
         // when
         val input = div.querySelector("input")!!
         js("input.value = 'hello'")
-        input.dispatchEvent(Event("input"))
+        input.dispatchEvent(InputEvent("input"))
 
         // then
         assert(inputValue == "hello")

@@ -32,9 +32,9 @@ class ItemArrayLikesTest {
     fun `should iterate over all items in ItemArrayLike`() {
         // given
         val element = node.div {
-            it["id"] = "test"
-            it["class"] = "foot"
-            it["data-value"] = "bar"
+            node["id"] = "test"
+            node["class"] = "foot"
+            node["data-value"] = "bar"
         }
 
         // when
@@ -85,9 +85,7 @@ class ItemArrayLikesTest {
     @Test
     fun `should iterate over single item`() {
         // given
-        val element = node.div {
-            it["id"] = "only"
-        }
+        val element = node.div(id = "only")
 
         // when
         val values = mutableListOf<String>()

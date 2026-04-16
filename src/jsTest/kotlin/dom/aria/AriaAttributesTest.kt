@@ -18,6 +18,7 @@ package com.xemantic.kotlin.js.dom.aria
 
 import com.xemantic.kotlin.js.dom.html.*
 import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.test.assert
 import com.xemantic.kotlin.test.have
 import com.xemantic.kotlin.test.sameAsHtml
 import com.xemantic.kotlin.test.should
@@ -42,6 +43,32 @@ class AriaAttributesTest {
         div.toSemanticEvents().render() sameAsHtml """
             <div role="alert">
               Error message
+            </div>
+        """.trimIndent()
+    }
+
+    @Test
+    fun `should get role attribute from element`() = runTest {
+        // given
+        val div = node.div {
+            role = "alert"
+        }
+
+        // then
+        assert(div.role == "alert")
+    }
+
+    @Test
+    fun `should set role attribute directly on element`() = runTest {
+        // given
+        val div = node.div()
+
+        // when
+        div.role = "status"
+
+        // then
+        div.toSemanticEvents().render() sameAsHtml """
+            <div role="status">
             </div>
         """.trimIndent()
     }
@@ -201,6 +228,28 @@ class AriaAttributesTest {
     // endregion
 
     // region clearing attributes with null
+
+    @Test
+    fun `should remove role when set to null`() = runTest {
+        // given
+        val div = node.div {
+            role = "alert"
+            +"content"
+        }
+
+        // when
+        div.role = null
+
+        // then
+        div should {
+            have(role == null)
+        }
+        div.toSemanticEvents().render() sameAsHtml """
+            <div>
+              content
+            </div>
+        """.trimIndent()
+    }
 
     @Test
     fun `should remove aria-label when set to null`() = runTest {

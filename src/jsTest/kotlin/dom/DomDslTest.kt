@@ -47,8 +47,8 @@ class DomDslTest {
                         +"Hello World"
                     }
                     a(href = "https://example.com")
-                    "my:component"("bar") {
-                        it.id = "component-1"
+                    "my:component"("bar", id = "component-1") {
+                        div("foo")
                     }
                 }
             }
@@ -61,6 +61,8 @@ class DomDslTest {
                 <div class="foo">
                   <button class="large" aria-label="Hello World" data-my-test="hello-button">Hello World</button><a href="https://example.com"></a>
                   <my:component class="bar" id="component-1">
+                    <div class="foo">
+                    </div>
                   </my:component>
                 </div>
               </body>
@@ -98,7 +100,7 @@ class DomDslTest {
             }
 
             progress("circle") {
-                role = "status"
+                role = "progressbar"
                 aria.label = "Loading"
                 hidden = true
             }
@@ -122,7 +124,7 @@ class DomDslTest {
               <nav class="no-space">
                 <button class="large" type="submit" aria-label="Submit">Submit</button>
               </nav>
-              <progress class="circle" role="status" aria-label="Loading" hidden=""></progress>
+              <progress class="circle" role="progressbar" aria-label="Loading" hidden=""></progress>
               <div class="snackbar" role="alert">
                 <i aria-hidden="true">warning</i>
               </div>
@@ -223,6 +225,23 @@ class DomDslTest {
             hidden = false
         }
         assert(!element.hidden)
+    }
+
+    @Test
+    fun `should set native properties via attributes block`() = runTest {
+        // when
+        val input = node.input(type = "text") {
+            attributes {
+                required = true
+                maxLength = 20
+            }
+        }
+
+        // then
+        input should {
+            have(required)
+            have(maxLength == 20)
+        }
     }
 
     @Test

@@ -21,9 +21,19 @@ import com.xemantic.kotlin.js.dom.element.get
 import com.xemantic.kotlin.js.dom.element.set
 import org.w3c.dom.Element
 
-public inline var NodeBuilder.role: String?
-    get() = root.unsafeCast<Element>()["role"]
-    set(value) { root.unsafeCast<Element>()["role"] = value }
+public inline var Element.role: String?
+    get() = this["role"]
+    set(value) {
+        if (value == null) {
+            removeAttribute("role")
+        } else {
+            this["role"] = value
+        }
+    }
+
+public inline var <T : Element> NodeBuilder<T>.role: String?
+    get() = node.role
+    set(value) { node.role = value }
 
 public inline var AriaBuilder.label: String?
     get() = get("label")

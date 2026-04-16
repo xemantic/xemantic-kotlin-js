@@ -147,12 +147,12 @@ interface Navigator {
 
 The [`LoginViewModel`](src/commonTest/kotlin/test/mvvm/LoginViewModel.kt) exposes reactive state via `StateFlow` and delegates side effects to injected services. The `CoroutineDispatcher` is injected to decouple the ViewModel from any specific threading model:
 
-| Platform | Dispatcher | Why |
-|---|---|---|
-| **Kotlin/JS & WASM** | `Dispatchers.Default` or `Dispatchers.Main` | JavaScript is single-threaded — both map to the same event-loop dispatcher. |
-| **Android** | `Dispatchers.Main` (or `.immediate`) | `StateFlow` updates must be emitted on the UI thread to safely drive view updates. |
-| **iOS (Kotlin/Native)** | `Dispatchers.Main` | Maps to the main dispatch queue, same reasoning as Android. |
-| **Tests** | `UnconfinedTestDispatcher` | Executes coroutines eagerly and deterministically, without a real event loop. |
+| Platform                | Dispatcher                                  | Why                                                                                |
+|-------------------------|---------------------------------------------|------------------------------------------------------------------------------------|
+| **Kotlin/JS & WASM**    | `Dispatchers.Default` or `Dispatchers.Main` | JavaScript is single-threaded — both map to the same event-loop dispatcher.        |
+| **Android**             | `Dispatchers.Main` (or `.immediate`)        | `StateFlow` updates must be emitted on the UI thread to safely drive view updates. |
+| **iOS (Kotlin/Native)** | `Dispatchers.Main`                          | Maps to the main dispatch queue, same reasoning as Android.                        |
+| **Tests**               | `UnconfinedTestDispatcher`                  | Executes coroutines eagerly and deterministically, without a real event loop.      |
 
 ```kotlin
 class LoginViewModel(
