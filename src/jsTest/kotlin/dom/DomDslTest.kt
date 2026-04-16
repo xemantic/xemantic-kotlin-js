@@ -48,9 +48,7 @@ class DomDslTest {
                     }
                     a(href = "https://example.com")
                     "my:component"("bar", id = "component-1") {
-                        div {
-                            +"Foo"
-                        }
+                        div("foo")
                     }
                 }
             }
@@ -63,7 +61,8 @@ class DomDslTest {
                 <div class="foo">
                   <button class="large" aria-label="Hello World" data-my-test="hello-button">Hello World</button><a href="https://example.com"></a>
                   <my:component class="bar" id="component-1">
-                    <div>Foo</div>
+                    <div class="foo">
+                    </div>
                   </my:component>
                 </div>
               </body>
@@ -101,7 +100,7 @@ class DomDslTest {
             }
 
             progress("circle") {
-                role = "status"
+                role = "progressbar"
                 aria.label = "Loading"
                 hidden = true
             }
@@ -125,7 +124,7 @@ class DomDslTest {
               <nav class="no-space">
                 <button class="large" type="submit" aria-label="Submit">Submit</button>
               </nav>
-              <progress class="circle" role="status" aria-label="Loading" hidden=""></progress>
+              <progress class="circle" role="progressbar" aria-label="Loading" hidden=""></progress>
               <div class="snackbar" role="alert">
                 <i aria-hidden="true">warning</i>
               </div>
