@@ -228,6 +228,23 @@ class DomDslTest {
     }
 
     @Test
+    fun `should set native properties via attributes block`() = runTest {
+        // when
+        val input = node.input(type = "text") {
+            attributes {
+                required = true
+                maxLength = 20
+            }
+        }
+
+        // then
+        input should {
+            have(required)
+            have(maxLength == 20)
+        }
+    }
+
+    @Test
     fun `should create a single Text node when multiple strings are added`() = runTest {
         // when
         val element = node.div {

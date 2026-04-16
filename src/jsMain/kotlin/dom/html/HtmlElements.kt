@@ -849,7 +849,7 @@ public inline fun NodeBuilder<*>.slot(
 public inline fun NodeBuilder<*>.icon(
     name: String
 ): HTMLElement = i {
-    node.aria.hidden = true
+    aria.hidden = true
     +name
 }
 

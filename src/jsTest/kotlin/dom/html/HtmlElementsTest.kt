@@ -353,9 +353,7 @@ class HtmlElementsTest {
                 li { +"Item 3" }
             }
             ol("steps") {
-                attributes {
-                    start = 1
-                }
+                node.start = 1
                 li { +"First step" }
                 li { +"Second step" }
             }
@@ -925,9 +923,7 @@ class HtmlElementsTest {
     fun `should create media elements - audio video track`() = runTest {
         val body = node.body {
             audio("player") {
-                attributes {
-                    controls = true
-                }
+                node.controls = true
                 source(src = "audio.mp3", type = "audio/mpeg")
                 source(src = "audio.ogg", type = "audio/ogg")
                 +"Your browser does not support audio."
@@ -955,9 +951,11 @@ class HtmlElementsTest {
         // when
         val body = node.body {
             iframe("embedded", src = "https://example.com") {
-                node.width = "600"
-                node.height = "400"
-                node.title = "Example"
+                attributes {
+                    width = "600"
+                    height = "400"
+                    title = "Example"
+                }
             }
             embed(src = "plugin.swf", type = "application/x-shockwave-flash") {
                 attributes {

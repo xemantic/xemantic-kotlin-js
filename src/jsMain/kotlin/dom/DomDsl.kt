@@ -99,7 +99,7 @@ public class NodeBuilder<T : Node>(
         if (lastChild != null && lastChild is Text) {
             lastChild.appendData(this)
         } else {
-             node.appendChild(
+            node.appendChild(
                 node.ownerDocument!!.createTextNode(this)
             )
         }
