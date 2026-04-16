@@ -17,7 +17,7 @@
 package com.xemantic.kotlin.js.dom.html
 
 import com.xemantic.kotlin.js.dom.element.set
-import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.sameAsHtml
 import com.xemantic.markanywhere.js.toSemanticEvents
 import com.xemantic.markanywhere.render.render
@@ -31,7 +31,7 @@ class HtmlElementsTest {
     @Test
     fun `should create document structure elements - html head body title`() = runTest {
         // when
-        val html = node.html(lang = "en") {
+        val html = nodes.html(lang = "en") {
             head {
                 title { +"Page Title" }
             }
@@ -64,7 +64,7 @@ class HtmlElementsTest {
     @Test
     fun `should create metadata elements - base link meta`() = runTest {
         // when
-        val head = node.head {
+        val head = nodes.head {
             base(href = "https://example.com/")
             link(rel = "stylesheet", href = "style.css")
             meta(name = "viewport", content = "width=device-width")
@@ -83,7 +83,7 @@ class HtmlElementsTest {
     @Test
     fun `should create scripting elements - style script noscript`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             style { +"body { color: red; }" }
             script { +"console.log('hello')" }
             script(src = "app.js")
@@ -119,7 +119,7 @@ class HtmlElementsTest {
     @Test
     fun `should create section elements - header footer main nav`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             header("site-header") {
                 nav("main-nav") {
                     +"Navigation"
@@ -154,7 +154,7 @@ class HtmlElementsTest {
     @Test
     fun `should create section elements - section article aside address`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             section("main-section") {
                 article("blog-post") {
                     +"Article content"
@@ -192,7 +192,7 @@ class HtmlElementsTest {
     @Test
     fun `should create section elements - hgroup search`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             hgroup(id = "title-group") {
                 h1 { +"Main Title" }
                 p { +"Subtitle" }
@@ -237,7 +237,7 @@ class HtmlElementsTest {
     @Test
     fun `should create heading elements - h1 through h6`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             h1("title") { +"Heading 1" }
             h2("subtitle") { +"Heading 2" }
             h3 { +"Heading 3" }
@@ -278,7 +278,7 @@ class HtmlElementsTest {
     @Test
     fun `should create grouping content elements - div p pre blockquote`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             div("container") {
                 p("intro") {
                     +"This is a paragraph."
@@ -315,7 +315,7 @@ class HtmlElementsTest {
     @Test
     fun `should create figure figcaption and hr elements`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             figure("image-figure") {
                 img(src = "image.png", alt = "An image")
                 figcaption {
@@ -346,7 +346,7 @@ class HtmlElementsTest {
     @Test
     fun `should create list elements - ul ol li`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             ul("menu") {
                 li { +"Item 1" }
                 li("active") { +"Item 2" }
@@ -388,7 +388,7 @@ class HtmlElementsTest {
     @Test
     fun `should create definition list and menu elements - dl dt dd menu`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             dl("glossary") {
                 dt { +"Term 1" }
                 dd { +"Definition 1" }
@@ -441,7 +441,7 @@ class HtmlElementsTest {
     @Test
     fun `should create table elements - table caption colgroup col thead tbody tfoot tr th td`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             table("data-table") {
                 caption { +"Monthly Sales" }
                 colgroup {
@@ -549,7 +549,7 @@ class HtmlElementsTest {
     @Test
     fun `should create text semantic elements - span a strong em b i u s small mark`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             p {
                 span("highlight") { +"Span text" }
                 +" "
@@ -598,7 +598,7 @@ class HtmlElementsTest {
     @Test
     fun `should create technical text elements - sub sup abbr cite code dfn kbd samp var`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             p {
                 +"H"
                 sub { +"2" }
@@ -664,7 +664,7 @@ class HtmlElementsTest {
     @Test
     fun `should create quotation and editing elements - q time data ins del`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             p {
                 q(cite = "https://example.com") {
                     +"An inline quote"
@@ -713,7 +713,7 @@ class HtmlElementsTest {
     @Test
     fun `should create internationalization elements - ruby rt rp bdi bdo`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             ruby {
                 +"明日"
                 rp { +"(" }
@@ -749,7 +749,7 @@ class HtmlElementsTest {
     @Test
     fun `should create line break elements - br wbr`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             p {
                 +"Line 1"
                 br()
@@ -783,7 +783,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create form structure elements - form fieldset legend label input button`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             form("login-form", action = "/login", method = "POST") {
                 fieldset {
                     legend { +"Login" }
@@ -819,7 +819,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create form selection elements - select option optgroup textarea datalist`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             form {
                 textarea(
                     "description",
@@ -864,7 +864,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create form output elements - output meter progress`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             form {
                 output(name = "result") {
                     node["for"] = "a b"
@@ -899,7 +899,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create image elements - img picture source`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             img(src = "photo.jpg", alt = "A photo") {
                 attributes {
                     width = 300
@@ -921,7 +921,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create media elements - audio video track`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             audio("player") {
                 node.controls = true
                 source(src = "audio.mp3", type = "audio/mpeg")
@@ -949,7 +949,7 @@ class HtmlElementsTest {
     @Test
     fun `should create embedded content elements - iframe embed object canvas map area`() = runTest {
         // when
-        val body = node.body {
+        val body = nodes.body {
             iframe("embedded", src = "https://example.com") {
                 attributes {
                     width = "600"
@@ -1012,7 +1012,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create interactive elements - details summary dialog`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             details("collapsible") {
                 node.open = true
                 summary { +"Click to expand" }
@@ -1053,7 +1053,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create template and slot elements`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             template(id = "row-template") {
                 tr {
                     td("name")
@@ -1092,7 +1092,7 @@ class HtmlElementsTest {
 
     @Test
     fun `should create icon helper element`() = runTest {
-        val body = node.body {
+        val body = nodes.body {
             icon("home")
             icon("settings")
         }

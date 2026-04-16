@@ -38,7 +38,7 @@ class DomDslTest {
     @Test
     fun `should create HTML element`() = runTest {
         // when
-        val html = node.html(lang = "en") {
+        val html = nodes.html(lang = "en") {
             body {
                 div("foo") {
                     button("large") {
@@ -73,7 +73,7 @@ class DomDslTest {
     @Test
     fun `should create login form`() = runTest {
         // when
-        val form = node.form("app-login") {
+        val form = nodes.form("app-login") {
             aria.label = "Login"
 
             div("field label border round prefix") {
@@ -135,7 +135,7 @@ class DomDslTest {
     @Test
     fun `should append to existing HTML element`() = runTest {
         // given
-        val body = node.body()
+        val body = nodes.body()
 
         // when
         body {
@@ -177,7 +177,7 @@ class DomDslTest {
     @Test
     fun `should set and get data attributes`() = runTest {
         // when
-        val div = node.div {
+        val div = nodes.div {
             dataset["foo"] = "bar"
             dataset["otherAttribute"] = "value2"
         }
@@ -191,14 +191,14 @@ class DomDslTest {
 
     @Test
     fun `should return null for non-existent data attribute`() = runTest {
-        node.div {
+        nodes.div {
             assert(dataset["nonexistent"] == null)
         }
     }
 
     @Test
     fun `should clear data attribute when set to null`() = runTest {
-        val element = node.div {
+        val element = nodes.div {
             dataset["test"] = "hello"
             dataset["test"] = null
         }
@@ -207,7 +207,7 @@ class DomDslTest {
 
     @Test
     fun `should clear camelCase data attribute when set to null`() = runTest {
-        val element = node.div {
+        val element = nodes.div {
             dataset["testValue"] = "hello"
             dataset["testValue"] = null
         }
@@ -216,7 +216,7 @@ class DomDslTest {
 
     @Test
     fun `should set and get hidden property`() = runTest {
-        val element = node.div {
+        val element = nodes.div {
             hidden = true
         }
         assert(element.hidden)
@@ -230,7 +230,7 @@ class DomDslTest {
     @Test
     fun `should set native properties via attributes block`() = runTest {
         // when
-        val input = node.input(type = "text") {
+        val input = nodes.input(type = "text") {
             attributes {
                 required = true
                 maxLength = 20
@@ -247,7 +247,7 @@ class DomDslTest {
     @Test
     fun `should create a single Text node when multiple strings are added`() = runTest {
         // when
-        val element = node.div {
+        val element = nodes.div {
             +"foo"
             +"bar"
             +"baz"

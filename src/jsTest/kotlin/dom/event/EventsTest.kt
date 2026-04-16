@@ -20,7 +20,7 @@ import com.xemantic.kotlin.js.dom.html.button
 import com.xemantic.kotlin.js.dom.html.div
 import com.xemantic.kotlin.js.dom.html.form
 import com.xemantic.kotlin.js.dom.html.input
-import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.assert
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.InputEvent
@@ -33,7 +33,7 @@ class EventsTest {
     fun `should handle onClick event`() {
         // given
         var clicked = false
-        val button = node.button {
+        val button = nodes.button {
             onClick { clicked = true }
             +"Click me"
         }
@@ -49,7 +49,7 @@ class EventsTest {
     fun `should receive MouseEvent in onClick handler`() {
         // given
         var receivedEvent: MouseEvent? = null
-        val button = node.button {
+        val button = nodes.button {
             onClick { receivedEvent = it }
             +"Click me"
         }
@@ -65,7 +65,7 @@ class EventsTest {
     fun `should handle onSubmit event`() {
         // given
         var submitted = false
-        val form = node.form {
+        val form = nodes.form {
             onSubmit {
                 it.preventDefault()
                 submitted = true
@@ -83,7 +83,7 @@ class EventsTest {
     fun `should handle onInput event`() {
         // given
         var inputReceived = false
-        val input = node.input(type = "text") {
+        val input = nodes.input(type = "text") {
             onInput { inputReceived = true }
         }
 
@@ -98,7 +98,7 @@ class EventsTest {
     fun `should handle onInput event on parent element`() {
         // given
         var inputValue = ""
-        val div = node.div {
+        val div = nodes.div {
             input(type = "text", name = "test") {
                 onInput { inputValue = node.value }
             }

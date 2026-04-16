@@ -17,7 +17,7 @@
 package com.xemantic.kotlin.js.dom.aria
 
 import com.xemantic.kotlin.js.dom.html.*
-import com.xemantic.kotlin.js.dom.node
+import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.assert
 import com.xemantic.kotlin.test.have
 import com.xemantic.kotlin.test.sameAsHtml
@@ -34,7 +34,7 @@ class AriaAttributesTest {
     @Test
     fun `should set role attribute on element`() = runTest {
         // when
-        val div = node.div {
+        val div = nodes.div {
             role = "alert"
             +"Error message"
         }
@@ -50,7 +50,7 @@ class AriaAttributesTest {
     @Test
     fun `should get role attribute from element`() = runTest {
         // given
-        val div = node.div {
+        val div = nodes.div {
             role = "alert"
         }
 
@@ -61,7 +61,7 @@ class AriaAttributesTest {
     @Test
     fun `should set role attribute directly on element`() = runTest {
         // given
-        val div = node.div()
+        val div = nodes.div()
 
         // when
         div.role = "status"
@@ -80,7 +80,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-label attribute on element`() = runTest {
         // when
-        val button = node.button {
+        val button = nodes.button {
             aria.label = "Close dialog"
             +"X"
         }
@@ -98,7 +98,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-hidden attribute to true`() = runTest {
         // when
-        val span = node.span {
+        val span = nodes.span {
             aria.hidden = true
             +"decorative"
         }
@@ -112,7 +112,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-hidden attribute to false`() = runTest {
         // when
-        val span = node.span {
+        val span = nodes.span {
             aria.hidden = false
             +"visible"
         }
@@ -130,7 +130,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-disabled attribute to true`() = runTest {
         // when
-        val button = node.button {
+        val button = nodes.button {
             aria.disabled = true
             +"Save"
         }
@@ -144,7 +144,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-disabled attribute to false`() = runTest {
         // when
-        val button = node.button {
+        val button = nodes.button {
             aria.disabled = false
             +"Save"
         }
@@ -162,7 +162,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-expanded attribute to true`() = runTest {
         // when
-        val button = node.button {
+        val button = nodes.button {
             aria.expanded = true
             +"Menu"
         }
@@ -176,7 +176,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-expanded attribute to false`() = runTest {
         // when
-        val button = node.button {
+        val button = nodes.button {
             aria.expanded = false
             +"Menu"
         }
@@ -194,7 +194,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-selected attribute to true`() = runTest {
         // when
-        val li = node.li {
+        val li = nodes.li {
             role = "tab"
             aria.selected = true
             +"Active Tab"
@@ -211,7 +211,7 @@ class AriaAttributesTest {
     @Test
     fun `should set aria-selected attribute to false`() = runTest {
         // when
-        val li = node.li {
+        val li = nodes.li {
             role = "tab"
             aria.selected = false
             +"Inactive Tab"
@@ -232,7 +232,7 @@ class AriaAttributesTest {
     @Test
     fun `should remove role when set to null`() = runTest {
         // given
-        val div = node.div {
+        val div = nodes.div {
             role = "alert"
             +"content"
         }
@@ -254,7 +254,7 @@ class AriaAttributesTest {
     @Test
     fun `should remove aria-label when set to null`() = runTest {
         // given
-        val button = node.button {
+        val button = nodes.button {
             aria.label = "Close"
         }
 
@@ -270,7 +270,7 @@ class AriaAttributesTest {
     @Test
     fun `should remove aria-hidden when set to null`() = runTest {
         // given
-        val span = node.span {
+        val span = nodes.span {
             aria.hidden = true
             +"content"
         }
@@ -290,7 +290,7 @@ class AriaAttributesTest {
     @Test
     fun `should remove arbitrary aria attribute when set to null`() = runTest {
         // given
-        val div = node.div {
+        val div = nodes.div {
             aria["live"] = "polite"
             +"content"
         }
@@ -313,7 +313,7 @@ class AriaAttributesTest {
     @Test
     fun `should set arbitrary aria attributes via indexed access`() = runTest {
         // when
-        val div = node.div {
+        val div = nodes.div {
             aria["live"] = "assertive"
             aria["atomic"] = "true"
             +"Dynamic content"
@@ -334,7 +334,7 @@ class AriaAttributesTest {
     @Test
     fun `should combine role and multiple aria attributes`() = runTest {
         // when
-        val nav = node.nav {
+        val nav = nodes.nav {
             role = "tablist"
             aria.label = "Main navigation"
             button {
