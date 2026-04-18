@@ -60,6 +60,21 @@ class EnabledTest {
     }
 
     @Test
+    fun `should reenable disabled input via enabled setter`() {
+        // given
+        val element = nodes.input {
+            enabled = false
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
+    }
+
+    @Test
     fun `should default button to enabled`() {
         // given
         val element = nodes.button()
@@ -92,6 +107,21 @@ class EnabledTest {
         // then
         assert(element.disabled)
         assert(!element.enabled)
+    }
+
+    @Test
+    fun `should reenable disabled button via enabled setter`() {
+        // given
+        val element = nodes.button {
+            enabled = false
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
     }
 
     @Test
@@ -130,6 +160,21 @@ class EnabledTest {
     }
 
     @Test
+    fun `should reenable disabled select via enabled setter`() {
+        // given
+        val element = nodes.select {
+            enabled = false
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
+    }
+
+    @Test
     fun `should default textarea to enabled`() {
         // given
         val element = nodes.textarea()
@@ -165,6 +210,21 @@ class EnabledTest {
     }
 
     @Test
+    fun `should reenable disabled textarea via enabled setter`() {
+        // given
+        val element = nodes.textarea {
+            enabled = false
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
+    }
+
+    @Test
     fun `should default fieldset to enabled`() {
         // given
         val element = nodes.fieldset()
@@ -197,6 +257,21 @@ class EnabledTest {
         // then
         assert(element.disabled)
         assert(!element.enabled)
+    }
+
+    @Test
+    fun `should reenable disabled fieldset via enabled setter`() {
+        // given
+        val element = nodes.fieldset {
+            enabled = false
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
     }
 
     @Test
@@ -244,6 +319,24 @@ class EnabledTest {
     }
 
     @Test
+    fun `should reenable disabled option via enabled setter`() {
+        // given
+        lateinit var element: HTMLOptionElement
+        nodes.select {
+            element = option(value = "a") {
+                enabled = false
+            }
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
+    }
+
+    @Test
     fun `should default optgroup to enabled`() {
         // given
         lateinit var element: HTMLOptGroupElement
@@ -285,6 +378,24 @@ class EnabledTest {
         // then
         assert(element.disabled)
         assert(!element.enabled)
+    }
+
+    @Test
+    fun `should reenable disabled optgroup via enabled setter`() {
+        // given
+        lateinit var element: HTMLOptGroupElement
+        nodes.select {
+            element = optgroup(label = "group") {
+                enabled = false
+            }
+        }
+
+        // when
+        element.enabled = true
+
+        // then
+        assert(!element.disabled)
+        assert(element.enabled)
     }
 
 }
