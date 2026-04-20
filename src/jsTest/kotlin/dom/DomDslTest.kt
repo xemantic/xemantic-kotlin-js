@@ -250,6 +250,44 @@ class DomDslTest {
     }
 
     @Test
+    fun `should set style properties`() = runTest {
+        // when
+        val element = nodes.div {
+            style.color = "red"
+            style.backgroundColor = "blue"
+        }
+
+        // then
+        element.toSemanticEvents().render() sameAsHtml """
+            <div style="color: red; background-color: blue;">
+            </div>
+        """.trimIndent()
+    }
+
+    @Test
+    fun `should mutate style without clearing children`() = runTest {
+        // given
+        val element = nodes.div {
+            style.color = "red"
+            p { +"kept" }
+        }
+
+        // when
+        element + {
+            style.color = "green"
+        }
+
+        // then
+        element.toSemanticEvents().render() sameAsHtml """
+            <div style="color: green;">
+              <p>
+                kept
+              </p>
+            </div>
+        """.trimIndent()
+    }
+
+    @Test
     fun `should set native properties via attributes block`() = runTest {
         // when
         val input = nodes.input(type = "text") {
