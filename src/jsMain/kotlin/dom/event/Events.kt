@@ -19,6 +19,7 @@ package com.xemantic.kotlin.js.dom.event
 import com.xemantic.kotlin.js.dom.NodeBuilder
 import org.w3c.dom.GlobalEventHandlers
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.InputEvent
 import org.w3c.dom.events.MouseEvent
 
 public inline fun NodeBuilder<*>.onClick(
@@ -38,7 +39,7 @@ public inline fun NodeBuilder<*>.onSubmit(
 }
 
 public inline fun NodeBuilder<*>.onInput(
-    crossinline block: (Event) -> Unit
+    crossinline block: (InputEvent) -> Unit
 ) {
     node.unsafeCast<GlobalEventHandlers>().oninput = {
         block(it)

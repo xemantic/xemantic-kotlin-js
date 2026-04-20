@@ -847,10 +847,13 @@ public inline fun NodeBuilder<*>.slot(
 
 @Suppress("NOTHING_TO_INLINE")
 public inline fun NodeBuilder<*>.icon(
-    name: String
-): HTMLElement = i {
+    name: String,
+    klass: String? = null,
+    crossinline block: NodeBuilder<HTMLElement>.() -> Unit = {}
+) : HTMLElement = i(klass) {
     aria.hidden = true
     +name
+    block()
 }
 
 // endregion
