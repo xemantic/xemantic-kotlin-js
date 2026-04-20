@@ -20,6 +20,7 @@ import com.xemantic.kotlin.js.dom.element.set
 import kotlinx.browser.document
 import kotlinx.dom.clear
 import org.w3c.dom.*
+import org.w3c.dom.css.CSSStyleDeclaration
 
 @DslMarker
 public annotation class DomDsl
@@ -168,3 +169,5 @@ public class DataBuilder(
 public inline var <T : HTMLElement> NodeBuilder<T>.hidden: Boolean
     get() = node.hidden
     set(value) { node.hidden = value }
+
+public inline val <T : HTMLElement> NodeBuilder<T>.style: CSSStyleDeclaration get() = node.style
