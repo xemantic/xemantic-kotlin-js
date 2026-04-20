@@ -133,9 +133,25 @@ class DomDslTest {
     }
 
     @Test
-    fun `should append to existing HTML element`() = runTest {
+    fun `should apply block to icon element`() = runTest {
+        // when
+        val icon = nodes.icon("star", klass = "small") {
+            dataset["testId"] = "star-icon"
+            aria.label = "favorite"
+        }
+
+        // then
+        icon.toSemanticEvents().render() sameAsHtml """
+            <i class="small" aria-hidden="true" data-test-id="star-icon" aria-label="favorite">star</i>
+        """.trimIndent()
+    }
+
+    @Test
+    fun `should replace contents of existing HTML element when invoked`() = runTest {
         // given
-        val body = nodes.body()
+        val body = nodes.body {
+            p { +"original" }
+        }
 
         // when
         body {
@@ -145,10 +161,12 @@ class DomDslTest {
         }
 
         // then
-        (body.lastChild as Element).toSemanticEvents().render() sameAsHtml """
-            <div class="foo">
-              Hello World
-            </div>
+        body.toSemanticEvents().render() sameAsHtml """
+            <body>
+              <div class="foo">
+                Hello World
+              </div>
+            </body>
         """.trimIndent()
     }
 
@@ -215,15 +233,19 @@ class DomDslTest {
     }
 
     @Test
-    fun `should set and get hidden property`() = runTest {
+    fun `should set and get hidden property`() {
+        // given
         val element = nodes.div {
             hidden = true
         }
         assert(element.hidden)
 
-        element {
+        // when
+        element + {
             hidden = false
         }
+        
+        // then
         assert(!element.hidden)
     }
 
@@ -259,6 +281,80 @@ class DomDslTest {
             have(firstChild is Text)
             have(element.textContent == "foobarbaz")
         }
+    }
+
+    @Test
+    fun `should replace contents when NodeBuilder is invoked`() = runTest {
+        // given
+        val builder = nodes
+        builder.div("stale")
+
+        // when
+        builder {
+            div("fresh") {
+                +"Hello World"
+            }
+        }
+
+        // then
+        builder.node should {
+            have(childNodes.length == 1)
+        }
+        (builder.node.firstChild as Element).toSemanticEvents().render() sameAsHtml """
+            <div class="fresh">
+              Hello World
+            </div>
+        """.trimIndent()
+    }
+
+    @Test
+    fun `should accumulate children when NodeBuilder is plused multiple times`() = runTest {
+        // given
+        val builder = nodes
+        builder.div("first")
+
+        // when
+        builder + {
+            div("second")
+        }
+        builder + {
+            div("third")
+        }
+
+        // then
+        builder.node should {
+            have(childNodes.length == 3)
+            have((childNodes[0] as Element).className == "first")
+            have((childNodes[1] as Element).className == "second")
+            have((childNodes[2] as Element).className == "third")
+        }
+    }
+
+    @Test
+    fun `should add nodes to existing element without clearing`() = runTest {
+        // given
+        val article = nodes.article {
+            h1 { +"Title" }
+        }
+
+        // when
+        article + {
+            section {
+                +"content"
+            }
+        }
+
+        // then
+        article.toSemanticEvents().render() sameAsHtml """
+            <article>
+              <h1>
+                Title
+              </h1>
+              <section>
+                content
+              </section>
+            </article>
+        """.trimIndent()
     }
 
 }

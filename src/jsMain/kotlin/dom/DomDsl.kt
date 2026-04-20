@@ -18,6 +18,7 @@ package com.xemantic.kotlin.js.dom
 
 import com.xemantic.kotlin.js.dom.element.set
 import kotlinx.browser.document
+import kotlinx.dom.clear
 import org.w3c.dom.*
 
 @DslMarker
@@ -30,6 +31,14 @@ public val nodes: NodeBuilder<DocumentFragment> get() = NodeBuilder(
 public inline operator fun <T : Node> T.invoke(
     crossinline block: NodeBuilder<T>.() -> Unit
 ): T {
+    clear()
+    NodeBuilder(this).block()
+    return this
+}
+
+public inline operator fun <T : Node> T.plus(
+    crossinline block: NodeBuilder<T>.() -> Unit
+): T {
     NodeBuilder(this).block()
     return this
 }
@@ -38,6 +47,19 @@ public inline operator fun <T : Node> T.invoke(
 public class NodeBuilder<T : Node>(
     public val node: T
 ) {
+
+    public inline operator fun invoke(
+        crossinline block: NodeBuilder<T>.() -> Unit
+    ) {
+        node.clear()
+        block()
+    }
+
+    public inline operator fun plus(
+        crossinline block: NodeBuilder<T>.() -> Unit
+    ) {
+        block()
+    }
 
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun String.invoke(

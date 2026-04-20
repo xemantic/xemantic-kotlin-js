@@ -1,74 +1,26 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file captures only what cannot be inferred from the codebase itself.
 
-## Build Commands
+## Rules for editing this file
 
-```bash
-./gradlew build                    # Build and test all targets
-./gradlew jsTest                   # Run JS tests only
-./gradlew wasmJsTest               # Run WASM tests only
-./gradlew jsBrowserTest            # Run JS browser tests
-./gradlew jsNodeTest               # Run JS Node.js tests
-./gradlew dependencyUpdates        # Check for dependency updates (use --no-parallel)
-```
+Both developers and AI agents are expected to add entries as they encounter surprises.
 
-## Project Overview
+- **Add an entry** when you encounter something unexpected: a build quirk, a non-obvious constraint, a dependency gotcha, or any behavior that would surprise the next agent or developer.
+- **Add an entry** when a developer flags an anti-pattern produced by AI — describe the anti-pattern and the preferred alternative.
+- **Do not** add codebase overviews, directory listings, or anything discoverable by reading the source.
+- Keep entries concise: one line per lesson, grouped under a heading if a theme emerges.
 
-This is a Kotlin multiplatform library (`com.xemantic.kotlin:xemantic-kotlin-js`) providing JavaScript utilities, targeting:
-- **js** (browser + Node.js)
-- **wasmJs** (browser + Node.js + d8)
+## Known gotchas
 
-The library requires browser DOM support, so platforms without DOM access (like wasmWasi, native) are not supported.
+### Testing
 
-## Architecture
+- `runTest { }` is required only when the test body actually calls a `suspend` function — otherwise use a plain `@Test fun`. In this project, `Flow<SemanticEvent>.render()` (from `com.xemantic.markanywhere.render`) and `should { }` from `com.xemantic.kotlin.test.coroutines` are suspend; `should { }` from `com.xemantic.kotlin.test` (non-coroutines) is not.
 
-### DOM DSL (`src/jsMain/kotlin/`)
+### DOM DSL semantics
 
-The core feature is a type-safe DSL for building DOM trees:
+- `invoke` REPLACES (clears the node, then builds); `plus` APPENDS (just builds). This applies symmetrically to both the `Node.invoke` / `Node.plus` extensions and to `NodeBuilder.invoke` / `NodeBuilder.plus`. Use `+ { }` to mutate properties (e.g. `element + { hidden = false }`) — calling `element { hidden = false }` would also clear all children.
 
-- **DomDsl.kt**: Core DSL infrastructure
-  - `@DomDsl` marker annotation for scope control
-  - `nodes` property returning a `NodeBuilder` on a `DocumentFragment` for creating detached DOM trees (e.g., `nodes.div { }`)
-  - `Node.invoke()` extension to start building children on any existing node
-  - `NodeBuilder` class with:
-    - `String.invoke()` for arbitrary element names (e.g., `"my:component" { }`)
-    - `element()` function for creating typed elements
-    - `String.unaryPlus()` for text nodes (`+"Hello"`)
-  - `NodeBuilder.dataset` extension with `DataBuilder` for `data-*` attributes (`dataset["key"] = "value"`, `dataset["key"] = null` to remove)
-  - `NodeBuilder.hidden` property for toggling the `hidden` attribute
+## Anti-patterns to avoid
 
-- **dom/aria/**: Type-safe ARIA attribute support
-  - `AriaAttributes.kt`: ARIA attribute property definitions (`role`, `aria.label`, `aria.hidden`, `aria.disabled`, `aria.expanded`, `aria.selected`)
-  - `AriaBuilder.kt`: DSL builder for ARIA attributes via `aria.label = "text"` syntax, with generic `aria["name"]` indexed access
-
-- **dom/element/Elements.kt**: Low-level `Element` attribute extensions (`Element.get()`, `Element.set()`, `Element += "class"`, `Element -= "class"`)
-
-- **dom/event/Events.kt**: Event handler helpers (`onClick { }`, `onSubmit { }`, `onInput { }`)
-
-- **dom/html/HtmlElements.kt**: Type-safe HTML element functions (`div`, `button`, `span`, `a`, `icon`, etc.) that provide properly typed element receivers (e.g., `HTMLDivElement`, `HTMLButtonElement`)
-
-- **dom/svg/SvgElements.kt**: Type-safe SVG element functions (`svg`, `rect`, `circle`, `path`, etc.)
-
-### Usage Pattern
-
-```kotlin
-nodes.div("className") {
-    button("btn") {
-        aria.label = "Click me"
-        dataset["action"] = "submit"
-        onClick { }
-        +"Click me"
-    }
-}
-```
-
-## Testing
-
-Uses `xemantic-kotlin-test` with power-assert. Test assertions use `assert` and `have` functions from `com.xemantic.kotlin.test`.
-
-## Code Style
-
-- Explicit API mode enabled (`explicitApi()`)
-- Kotlin context parameters and context-sensitive resolution enabled
-- All public API requires explicit visibility modifiers
+- Do not add content to this file that is already discoverable by reading the source or build scripts — that inflates context without adding signal, reducing AI agent task success rates (see [arxiv 2602.11988](https://arxiv.org/abs/2602.11988)).
