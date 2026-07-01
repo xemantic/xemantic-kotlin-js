@@ -20,7 +20,7 @@ import com.xemantic.kotlin.js.dom.element.set
 import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.sameAs
 import com.xemantic.markanywhere.js.toSemanticEvents
-import com.xemantic.markanywhere.render.render
+import com.xemantic.markanywhere.render.renderHtml
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
@@ -358,7 +358,7 @@ class SvgElementsTest {
         }
 
         // then
-        svg.toSemanticEvents().render() sameAs /* language=html */ """
+        svg.toSemanticEvents().renderHtml() sameAs /* language=html */ """
             <svg class="main-image" viewBox="0 0 800 600" width="800" height="600">
               <title>
                 Landscape Scene
