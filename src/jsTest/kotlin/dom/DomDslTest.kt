@@ -25,7 +25,7 @@ import com.xemantic.kotlin.test.coroutines.should
 import com.xemantic.kotlin.test.have
 import com.xemantic.kotlin.test.sameAsHtml
 import com.xemantic.markanywhere.js.toSemanticEvents
-import com.xemantic.markanywhere.render.render
+import com.xemantic.markanywhere.render.renderHtml
 import kotlinx.browser.document
 import kotlinx.coroutines.test.runTest
 import org.w3c.dom.Element
@@ -55,7 +55,7 @@ class DomDslTest {
         }
 
         // then
-        html.toSemanticEvents().render() sameAsHtml """
+        html.toSemanticEvents().renderHtml() sameAsHtml """
             <html lang="en">
               <body>
                 <div class="foo">
@@ -113,7 +113,7 @@ class DomDslTest {
         }
 
         // then
-        form.toSemanticEvents().render() sameAsHtml """
+        form.toSemanticEvents().renderHtml() sameAsHtml """
             <form class="app-login" aria-label="Login">
               <div class="field label border round prefix">
                 <i aria-hidden="true">mail</i><input class="large border" name="username" type="text" aria-label="Username"/><label>Username</label>
@@ -141,7 +141,7 @@ class DomDslTest {
         }
 
         // then
-        icon.toSemanticEvents().render() sameAsHtml """
+        icon.toSemanticEvents().renderHtml() sameAsHtml """
             <i class="small" aria-hidden="true" data-test-id="star-icon" aria-label="favorite">star</i>
         """.trimIndent()
     }
@@ -161,7 +161,7 @@ class DomDslTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <div class="foo">
                 Hello World
@@ -183,7 +183,7 @@ class DomDslTest {
         }
 
         // then
-        element.toSemanticEvents().render() sameAsHtml """
+        element.toSemanticEvents().renderHtml() sameAsHtml """
             <article>
               <div class="foo">
                 Hello World
@@ -201,7 +201,7 @@ class DomDslTest {
         }
 
         // then
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
           <div data-foo="bar" data-other-attribute="value2">
           </div>
         """.trimIndent()
@@ -258,7 +258,7 @@ class DomDslTest {
         }
 
         // then
-        element.toSemanticEvents().render() sameAsHtml """
+        element.toSemanticEvents().renderHtml() sameAsHtml """
             <div style="color: red; background-color: blue;">
             </div>
         """.trimIndent()
@@ -278,7 +278,7 @@ class DomDslTest {
         }
 
         // then
-        element.toSemanticEvents().render() sameAsHtml """
+        element.toSemanticEvents().renderHtml() sameAsHtml """
             <div style="color: green;">
               <p>
                 kept
@@ -338,7 +338,7 @@ class DomDslTest {
         builder.node should {
             have(childNodes.length == 1)
         }
-        (builder.node.firstChild as Element).toSemanticEvents().render() sameAsHtml """
+        (builder.node.firstChild as Element).toSemanticEvents().renderHtml() sameAsHtml """
             <div class="fresh">
               Hello World
             </div>
@@ -383,7 +383,7 @@ class DomDslTest {
         }
 
         // then
-        article.toSemanticEvents().render() sameAsHtml """
+        article.toSemanticEvents().renderHtml() sameAsHtml """
             <article>
               <h1>
                 Title

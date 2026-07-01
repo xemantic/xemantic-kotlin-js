@@ -237,12 +237,5 @@ The view function returns a DOM node that can be appended to the document. ViewM
 
 ## Development
 
-### Update all the dependencies to the latest versions
-
-All the gradle dependencies are managed by the [libs.versions.toml](gradle/libs.versions.toml) file in the `gradle` dir.
-
-It is easy to check for the latest version by running:
-
-```shell
-./gradlew dependencyUpdates --no-parallel
-```
+See [DEVELOPMENT.md](DEVELOPMENT.md) for maintenance notes — updating the gradle wrapper and the
+project dependencies.

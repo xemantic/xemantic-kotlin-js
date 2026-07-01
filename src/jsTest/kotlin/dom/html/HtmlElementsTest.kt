@@ -20,7 +20,7 @@ import com.xemantic.kotlin.js.dom.element.set
 import com.xemantic.kotlin.js.dom.nodes
 import com.xemantic.kotlin.test.sameAsHtml
 import com.xemantic.markanywhere.js.toSemanticEvents
-import com.xemantic.markanywhere.render.render
+import com.xemantic.markanywhere.render.renderHtml
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
@@ -41,7 +41,7 @@ class HtmlElementsTest {
         }
 
         // then
-        html.toSemanticEvents().render() sameAsHtml """
+        html.toSemanticEvents().renderHtml() sameAsHtml """
             <html lang="en">
               <head>
                 <title>
@@ -71,7 +71,7 @@ class HtmlElementsTest {
         }
 
         // then
-        head.toSemanticEvents().render() sameAsHtml """
+        head.toSemanticEvents().renderHtml() sameAsHtml """
             <head>
               <base href="https://example.com/"/>
               <link href="style.css" rel="stylesheet"/>
@@ -93,7 +93,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <style>
             body { color: red; }
@@ -134,7 +134,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <header class="site-header">
                 <nav class="main-nav">
@@ -172,7 +172,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <section class="main-section">
                 <article class="blog-post">
@@ -211,7 +211,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <hgroup id="title-group">
                 <h1>
@@ -247,7 +247,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml /* language=html */ """
+        body.toSemanticEvents().renderHtml() sameAsHtml /* language=html */ """
             <body>
               <h1 class="title">
                 Heading 1
@@ -295,7 +295,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <div class="container">
                 <p class="intro">
@@ -326,7 +326,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <figure class="image-figure">
                 <img src="image.png" alt="An image"/>
@@ -360,7 +360,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <ul class="menu">
                 <li>
@@ -403,7 +403,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <dl class="glossary">
                 <dt>
@@ -478,7 +478,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <table class="data-table">
                 <caption>
@@ -580,7 +580,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <p>
                 <span class="highlight">Span text</span> <a class="link" href="https://example.com" target="_blank" name="example">Link</a>
@@ -637,7 +637,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <p>
                 H<sub>2</sub>O and E=mc<sup>2</sup>
@@ -692,7 +692,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <p>
                 <q cite="https://example.com">An inline quote</q>
@@ -733,7 +733,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <ruby>明日<rp>(</rp><rt>あした</rt><rp>)</rp></ruby>
               <p>
@@ -765,7 +765,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <p>
                 Line 1<br/>Line 2
@@ -802,7 +802,7 @@ class HtmlElementsTest {
                 }
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <form class="login-form" action="/login" method="POST">
                 <fieldset>
@@ -853,7 +853,7 @@ class HtmlElementsTest {
                 }
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <form>
                 <textarea class="description" name="description" placeholder="Enter description" rows="4" cols="50"></textarea><br/><select class="country-select" name="country"><optgroup label="Europe"><option value="de">Germany</option><option value="fr">France</option></optgroup><optgroup label="Asia"><option value="jp">Japan</option><option value="kr">Korea</option></optgroup></select><br/><input id="browser-input" list="browsers"/><datalist id="browsers"><option value="Chrome"></option><option value="Firefox"></option></datalist>
@@ -883,7 +883,7 @@ class HtmlElementsTest {
                 +"70%"
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <form>
                 <output name="result" for="a b">0</output>
@@ -912,7 +912,7 @@ class HtmlElementsTest {
                 img(src = "photo.jpg", alt = "A photo")
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <img src="photo.jpg" alt="A photo" width="300" height="200"/><picture class="responsive-image"><source srcset="photo-large.jpg" media="(min-width: 800px)"/><source srcset="photo-small.jpg" media="(max-width: 799px)"/><img src="photo.jpg" alt="A photo"/></picture>
             </body>
@@ -939,7 +939,7 @@ class HtmlElementsTest {
                 +"Your browser does not support video."
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <audio class="player" controls=""><source src="audio.mp3" type="audio/mpeg"/><source src="audio.ogg" type="audio/ogg"/>Your browser does not support audio.</audio><video class="video-player" controls="" width="640" height="480"><source src="video.mp4" type="video/mp4"/><track src="subtitles.vtt" kind="subtitles" srclang="en" label="English"/>Your browser does not support video.</video>
             </body>
@@ -993,7 +993,7 @@ class HtmlElementsTest {
         }
 
         // then
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <iframe class="embedded" src="https://example.com" width="600" height="400" title="Example"></iframe><embed src="plugin.swf" type="application/x-shockwave-flash" width="400" height="300"/>
               <object class="media-object" data="movie.swf" type="application/x-shockwave-flash">
@@ -1024,7 +1024,7 @@ class HtmlElementsTest {
                 button(id = "close") { +"Close" }
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <details class="collapsible" open="">
                 <summary>
@@ -1069,7 +1069,7 @@ class HtmlElementsTest {
                 }
             }
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <template id="row-template">
                 <tr>
@@ -1096,7 +1096,7 @@ class HtmlElementsTest {
             icon("home")
             icon("settings")
         }
-        body.toSemanticEvents().render() sameAsHtml """
+        body.toSemanticEvents().renderHtml() sameAsHtml """
             <body>
               <i aria-hidden="true">home</i><i aria-hidden="true">settings</i>
             </body>

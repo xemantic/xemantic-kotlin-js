@@ -23,7 +23,7 @@ import com.xemantic.kotlin.test.have
 import com.xemantic.kotlin.test.sameAsHtml
 import com.xemantic.kotlin.test.should
 import com.xemantic.markanywhere.js.toSemanticEvents
-import com.xemantic.markanywhere.render.render
+import com.xemantic.markanywhere.render.renderHtml
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
@@ -40,7 +40,7 @@ class AriaAttributesTest {
         }
 
         // then
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
             <div role="alert">
               Error message
             </div>
@@ -67,7 +67,7 @@ class AriaAttributesTest {
         div.role = "status"
 
         // then
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
             <div role="status">
             </div>
         """.trimIndent()
@@ -86,7 +86,7 @@ class AriaAttributesTest {
         }
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button aria-label="Close dialog">X</button>
         """.trimIndent()
     }
@@ -104,7 +104,7 @@ class AriaAttributesTest {
         }
 
         // then
-        span.toSemanticEvents().render() sameAsHtml """
+        span.toSemanticEvents().renderHtml() sameAsHtml """
             <span aria-hidden="true">decorative</span>
         """.trimIndent()
     }
@@ -118,7 +118,7 @@ class AriaAttributesTest {
         }
 
         // then
-        span.toSemanticEvents().render() sameAsHtml """
+        span.toSemanticEvents().renderHtml() sameAsHtml """
             <span aria-hidden="false">visible</span>
         """.trimIndent()
     }
@@ -136,7 +136,7 @@ class AriaAttributesTest {
         }
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button aria-disabled="true">Save</button>
         """.trimIndent()
     }
@@ -150,7 +150,7 @@ class AriaAttributesTest {
         }
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button aria-disabled="false">Save</button>
         """.trimIndent()
     }
@@ -168,7 +168,7 @@ class AriaAttributesTest {
         }
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button aria-expanded="true">Menu</button>
         """.trimIndent()
     }
@@ -182,7 +182,7 @@ class AriaAttributesTest {
         }
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button aria-expanded="false">Menu</button>
         """.trimIndent()
     }
@@ -201,7 +201,7 @@ class AriaAttributesTest {
         }
 
         // then
-        li.toSemanticEvents().render() sameAsHtml """
+        li.toSemanticEvents().renderHtml() sameAsHtml """
             <li role="tab" aria-selected="true">
               Active Tab
             </li>
@@ -218,7 +218,7 @@ class AriaAttributesTest {
         }
 
         // then
-        li.toSemanticEvents().render() sameAsHtml """
+        li.toSemanticEvents().renderHtml() sameAsHtml """
             <li role="tab" aria-selected="false">
               Inactive Tab
             </li>
@@ -244,7 +244,7 @@ class AriaAttributesTest {
         div should {
             have(role == null)
         }
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
             <div>
               content
             </div>
@@ -262,7 +262,7 @@ class AriaAttributesTest {
         button.aria.label = null
 
         // then
-        button.toSemanticEvents().render() sameAsHtml """
+        button.toSemanticEvents().renderHtml() sameAsHtml """
             <button></button>
         """.trimIndent()
     }
@@ -282,7 +282,7 @@ class AriaAttributesTest {
         span should {
             have(aria.hidden == null)
         }
-        span.toSemanticEvents().render() sameAsHtml """
+        span.toSemanticEvents().renderHtml() sameAsHtml """
             <span>content</span>
         """.trimIndent()
     }
@@ -299,7 +299,7 @@ class AriaAttributesTest {
         div.aria["live"] = null
 
         // then
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
             <div>
               content
             </div>
@@ -320,7 +320,7 @@ class AriaAttributesTest {
         }
 
         // then
-        div.toSemanticEvents().render() sameAsHtml """
+        div.toSemanticEvents().renderHtml() sameAsHtml """
             <div aria-live="assertive" aria-atomic="true">
               Dynamic content
             </div>
@@ -353,7 +353,7 @@ class AriaAttributesTest {
         }
 
         // then
-        nav.toSemanticEvents().render() sameAsHtml """
+        nav.toSemanticEvents().renderHtml() sameAsHtml """
             <nav role="tablist" aria-label="Main navigation">
               <button role="tab" aria-selected="true" aria-label="Home">Home</button><button role="tab" aria-selected="false" aria-disabled="true" aria-label="Settings">Settings</button>
             </nav>
