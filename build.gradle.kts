@@ -27,6 +27,7 @@ plugins {
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
     alias(libs.plugins.dokka)
     alias(libs.plugins.versions)
+    alias(libs.plugins.version.catalog.update)
     alias(libs.plugins.maven.publish)
     alias(libs.plugins.jreleaser)
     alias(libs.plugins.xemantic.conventions)
@@ -59,9 +60,7 @@ kotlin {
         apiVersion = kotlinTarget
         languageVersion = kotlinTarget
         freeCompilerArgs.addAll(
-            "-Xcontext-parameters",
-            "-Xcontext-sensitive-resolution",
-            "-Xexplicit-backing-fields"
+            "-Xcontext-sensitive-resolution"
         )
         extraWarnings = true
         progressiveMode = true
@@ -135,6 +134,16 @@ powerAssert {
 dokka {
     pluginsConfiguration.html {
         footerMessage = xemantic.copyright
+    }
+}
+
+versionCatalogUpdate {
+    // preserve the manual, logically-grouped ordering of libs.versions.toml
+    sortByKey = false
+    keep {
+        // kotlinTarget is a plain version constant with no version.ref
+        versions = setOf("kotlinTarget", "asm")
+        keepUnusedVersions = false
     }
 }
 
